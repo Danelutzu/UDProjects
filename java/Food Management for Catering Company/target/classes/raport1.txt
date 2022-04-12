@@ -1,0 +1,4 @@
+ID: 2  Hour: 11 Price: 10
+ID: 1  Hour: 11 Price: 2
+ID: 3  Hour: 11 Price: 8
+ID: 4  Hour: 11 Price: 5
