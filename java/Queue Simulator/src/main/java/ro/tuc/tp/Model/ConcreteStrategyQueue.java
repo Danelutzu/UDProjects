@@ -1,0 +1,22 @@
+package ro.tuc.tp.Model;
+
+import java.util.List;
+
+public class ConcreteStrategyQueue implements Strategy{
+    @Override
+    public void addTask(List<Server> servers, Task t){
+        //TO DO auto-generated method stub
+        int min=Integer.MAX_VALUE;
+        int id=0;
+        for(Server s:servers){
+            if(s.getNumberTasks()<min){
+                id=s.getID().get();
+            }
+        }
+        for(Server s:servers){
+            if(s.getID().get()==id){
+                s.addTask(t);
+            }
+        }
+    }
+}

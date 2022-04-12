@@ -1,0 +1,243 @@
+Time0
+Waiting tasks: (1 ,3 ,8) (7 ,3 ,2) (8 ,3 ,8) (16 ,3 ,6) (6 ,6 ,4) (12 ,6 ,3) (18 ,6 ,3) (19 ,6 ,6) (2 ,7 ,3) (20 ,8 ,2) (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: closed
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: closed
+
+Time1
+Waiting tasks: (1 ,3 ,8) (7 ,3 ,2) (8 ,3 ,8) (16 ,3 ,6) (6 ,6 ,4) (12 ,6 ,3) (18 ,6 ,3) (19 ,6 ,6) (2 ,7 ,3) (20 ,8 ,2) (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: closed
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: closed
+
+Time2
+Waiting tasks: (1 ,3 ,8) (7 ,3 ,2) (8 ,3 ,8) (16 ,3 ,6) (6 ,6 ,4) (12 ,6 ,3) (18 ,6 ,3) (19 ,6 ,6) (2 ,7 ,3) (20 ,8 ,2) (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: closed
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: closed
+
+Time3
+Waiting tasks: (6 ,6 ,4) (12 ,6 ,3) (18 ,6 ,3) (19 ,6 ,6) (2 ,7 ,3) (20 ,8 ,2) (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(1 ,3 ,8)]
+Server1: [(7 ,3 ,2)]
+Server2: [(8 ,3 ,8)]
+Server3: [(16 ,3 ,6)]
+Server4: closed
+
+Time4
+Waiting tasks: (6 ,6 ,4) (12 ,6 ,3) (18 ,6 ,3) (19 ,6 ,6) (2 ,7 ,3) (20 ,8 ,2) (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(1 ,3 ,7)]
+Server1: [(7 ,3 ,1)]
+Server2: [(8 ,3 ,7)]
+Server3: [(16 ,3 ,5)]
+Server4: closed
+
+Time5
+Waiting tasks: (6 ,6 ,4) (12 ,6 ,3) (18 ,6 ,3) (19 ,6 ,6) (2 ,7 ,3) (20 ,8 ,2) (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(1 ,3 ,7)]
+Server1: [(7 ,3 ,0)]
+Server2: [(8 ,3 ,6)]
+Server3: [(16 ,3 ,4)]
+Server4: closed
+
+Time6
+Waiting tasks: (2 ,7 ,3) (20 ,8 ,2) (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(1 ,3 ,5)]
+Server1: [(6 ,6 ,4)]
+Server2: [(8 ,3 ,5)]
+Server3: [(16 ,3 ,3), (18 ,6 ,3)]
+Server4: [(12 ,6 ,3), (19 ,6 ,6)]
+
+Time7
+Waiting tasks: (20 ,8 ,2) (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(1 ,3 ,4), (2 ,7 ,3)]
+Server1: [(6 ,6 ,3)]
+Server2: [(8 ,3 ,4)]
+Server3: [(16 ,3 ,2), (18 ,6 ,3)]
+Server4: [(12 ,6 ,2), (19 ,6 ,6)]
+
+Time8
+Waiting tasks: (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(1 ,3 ,3), (2 ,7 ,3)]
+Server1: [(6 ,6 ,2), (20 ,8 ,2)]
+Server2: [(8 ,3 ,3)]
+Server3: [(16 ,3 ,1), (18 ,6 ,3)]
+Server4: [(12 ,6 ,1), (19 ,6 ,6)]
+
+Time9
+Waiting tasks: (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(1 ,3 ,2), (2 ,7 ,3)]
+Server1: [(6 ,6 ,1), (20 ,8 ,2)]
+Server2: [(8 ,3 ,2)]
+Server3: [(18 ,6 ,3)]
+Server4: [(19 ,6 ,6)]
+
+Time10
+Waiting tasks: (14 ,11 ,3) (17 ,11 ,2) (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(1 ,3 ,1), (2 ,7 ,3)]
+Server1: [(6 ,6 ,1), (20 ,8 ,2)]
+Server2: [(8 ,3 ,1)]
+Server3: [(18 ,6 ,3)]
+Server4: [(19 ,6 ,6)]
+
+Time11
+Waiting tasks: (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(2 ,7 ,3)]
+Server1: [(20 ,8 ,2), (17 ,11 ,2)]
+Server2: [(8 ,3 ,1), (14 ,11 ,3)]
+Server3: [(18 ,6 ,1)]
+Server4: [(19 ,6 ,4)]
+
+Time12
+Waiting tasks: (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(2 ,7 ,2)]
+Server1: [(17 ,11 ,2)]
+Server2: [(14 ,11 ,2)]
+Server3: closed
+Server4: [(19 ,6 ,3)]
+
+Time13
+Waiting tasks: (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(2 ,7 ,1)]
+Server1: [(17 ,11 ,2)]
+Server2: [(14 ,11 ,2)]
+Server3: closed
+Server4: [(19 ,6 ,2)]
+
+Time14
+Waiting tasks: (13 ,15 ,2) (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: closed
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: [(19 ,6 ,1)]
+
+Time15
+Waiting tasks: (15 ,16 ,8) (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(13 ,15 ,2)]
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: closed
+
+Time16
+Waiting tasks: (3 ,17 ,4) (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(13 ,15 ,1)]
+Server1: [(15 ,16 ,8)]
+Server2: closed
+Server3: closed
+Server4: closed
+
+Time17
+Waiting tasks: (4 ,18 ,5) (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(3 ,17 ,4)]
+Server1: [(15 ,16 ,7)]
+Server2: closed
+Server3: closed
+Server4: closed
+
+Time18
+Waiting tasks: (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(3 ,17 ,3)]
+Server1: [(15 ,16 ,6)]
+Server2: [(4 ,18 ,5)]
+Server3: closed
+Server4: closed
+
+Time19
+Waiting tasks: (5 ,20 ,3) (11 ,20 ,9) (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(3 ,17 ,2)]
+Server1: [(15 ,16 ,5)]
+Server2: [(4 ,18 ,4)]
+Server3: closed
+Server4: closed
+
+Time20
+Waiting tasks: (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(3 ,17 ,1)]
+Server1: [(15 ,16 ,4)]
+Server2: [(4 ,18 ,3)]
+Server3: [(5 ,20 ,3)]
+Server4: [(11 ,20 ,9)]
+
+Time21
+Waiting tasks: (9 ,22 ,2) (10 ,24 ,6) 
+Server0: [(3 ,17 ,1)]
+Server1: [(15 ,16 ,3)]
+Server2: [(4 ,18 ,3)]
+Server3: [(5 ,20 ,2)]
+Server4: [(11 ,20 ,9)]
+
+Time22
+Waiting tasks: (10 ,24 ,6) 
+Server0: [(9 ,22 ,2)]
+Server1: [(15 ,16 ,2)]
+Server2: [(4 ,18 ,1)]
+Server3: [(5 ,20 ,1)]
+Server4: [(11 ,20 ,7)]
+
+Time23
+Waiting tasks: (10 ,24 ,6) 
+Server0: [(9 ,22 ,2)]
+Server1: [(15 ,16 ,2)]
+Server2: closed
+Server3: [(5 ,20 ,1)]
+Server4: [(11 ,20 ,6)]
+
+Time24
+Waiting tasks: 
+Server0: [(10 ,24 ,6)]
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: [(11 ,20 ,5)]
+
+Time25
+Waiting tasks: 
+Server0: [(10 ,24 ,5)]
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: [(11 ,20 ,4)]
+
+Time26
+Waiting tasks: 
+Server0: [(10 ,24 ,4)]
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: [(11 ,20 ,3)]
+
+Time27
+Waiting tasks: 
+Server0: [(10 ,24 ,3)]
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: [(11 ,20 ,2)]
+
+Time28
+Waiting tasks: 
+Server0: [(10 ,24 ,2)]
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: [(11 ,20 ,1)]
+
+Time29
+Waiting tasks: 
+Server0: [(10 ,24 ,2)]
+Server1: closed
+Server2: closed
+Server3: closed
+Server4: [(11 ,20 ,1)]
+
+Avg Processing Time: 0.9368421
+Avg Wait Time: 2.5066667
+Peak Time: 6
