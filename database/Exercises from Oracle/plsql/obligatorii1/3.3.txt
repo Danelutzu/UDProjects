@@ -1,0 +1,85 @@
+1.implicit cursors 
+2.explicit cursors
+3.merge
+4.insert
+5.delete
+6.update
+
+1.
+false-it uses implicit cursors
+
+2.
+SQL%FOUND, SQL%NOTFOUND, and SQL%ROWCOUNT are cursor atributes and are
+available when you use implicit cursors.
+
+CREATE TABLE new_depts AS SELECT * FROM departments;
+
+3.
+DECLARE
+ v_max_deptno new_depts.department_id%TYPE;
+BEGIN
+ SELECT MAX(department_id) INTO v_max_deptno
+ FROM new_depts;
+ DBMS_OUTPUT.PUT_LINE('The maximum department id is: ' || v_max_deptno);
+END;
+
+The maximum department id is: 190
+
+4-5.
+DECLARE
+ v_max_deptno new_depts.department_id%TYPE;
+v_dept_name new_depts.department_name%TYPE := 'A New Department';
+v_dept_id new_depts.department_id%TYPE;
+BEGIN
+ SELECT (MAX(department_id)+10) INTO v_dept_id
+ FROM new_depts;
+ DBMS_OUTPUT.PUT_LINE('The maximum department id is: ' || v_dept_id);
+END;
+
+6.
+DECLARE
+ v_max_deptno new_depts.department_id%TYPE;
+v_dept_name new_depts.department_name%TYPE := 'A New Department';
+v_dept_id new_depts.department_id%TYPE;
+BEGIN
+begin
+ SELECT (MAX(department_id)+10) INTO v_dept_id
+ FROM new_depts;
+ DBMS_OUTPUT.PUT_LINE('The maximum department id is: ' || v_dept_id);
+end;
+insert into new_depts 
+values(v_dept_id,v_dept_name,NULL,NULL);
+END;
+
+7.
+DECLARE
+ v_max_deptno new_depts.department_id%TYPE;
+v_dept_name new_depts.department_name%TYPE := 'A New Department';
+v_dept_id new_depts.department_id%TYPE;
+BEGIN
+begin
+ SELECT (MAX(department_id)+10) INTO v_dept_id
+ FROM new_depts;
+ DBMS_OUTPUT.PUT_LINE('The maximum department id is: ' || v_dept_id);
+end;
+insert into new_depts 
+values(v_dept_id,v_dept_name,NULL,NULL);
+DBMS_OUTPUT.PUT_LINE(sql%rowcount||'row inserted');
+END;
+
+8.
+DECLARE
+ v_max_deptno new_depts.department_id%TYPE;
+v_dept_name new_depts.department_name%TYPE := 'A New Department';
+v_dept_id new_depts.department_id%TYPE;
+BEGIN
+begin
+ SELECT (MAX(department_id)+10) INTO v_dept_id
+ FROM new_depts;
+ DBMS_OUTPUT.PUT_LINE('The maximum department id is: ' || v_dept_id);
+end;
+update new_depts
+set location_id=1400
+where location_id=1700;
+DBMS_OUTPUT.PUT_LINE(sql%rowcount||'row updated');
+END;

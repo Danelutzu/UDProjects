@@ -1,0 +1,26 @@
+1.full outer join
+2.outer join
+3.left outer join
+4.right outer join
+5.inner join 
+
+1.
+select e.first_name, e.last_name, d.department_name
+from employees e left outer join departments d
+ON(e.department_id=d.department_id)
+2.
+select e.first_name, e.last_name, d.department_name
+from employees e right outer join departments d
+ON(e.department_id=d.department_id)
+3.
+select e.first_name, e.last_name, d.department_name
+from employees e full outer join departments d
+ON(e.department_id=d.department_id)
+4.
+select c.first_name, c.last_name, e.event_date, e.description
+from d_events e right outer join d_clients c
+ON(e.client_number=c.client_number)
+5.
+select  s.description ,sa.shift_assign_date
+from F_SHIFTS s left outer join F_SHIFT_ASSIGNMENTS sa
+ON(s.code=sa.code)

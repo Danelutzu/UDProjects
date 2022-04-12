@@ -1,0 +1,39 @@
+1.Cartezian Product
+2.equijoin
+3.prorietary join
+4.alias
+5.join conditions
+
+1.
+SELECT *
+from d_play_list_items ,d_track_listings
+2.
+SELECT *
+from d_play_list_items p ,d_track_listings t
+where p.song_id=t.song_id
+3.
+SELECT title, type_code, description , artist
+from d_songs s , d_types t
+where s.type_code=t.code
+4.
+SELECT title, type_code, description , artist
+from d_songs s , d_types t
+where s.type_code=t.code and s.id in (47,48)
+5.
+SELECT c.FIRST_NAME, c.client_number,e.client_number,ja.event_id,e.id
+from  d_clients c, d_events e, d_job_assignments ja
+where c.client_number=e.client_number 
+and ja.event_id=e.id
+6.
+SELECT song_id, title
+from  d_track_listings t , d_cds c
+where c.cd_number=t.cd_number 
+7.
+a.false
+b.true
+c.true
+d.false
+e.true
+f.false
+g.true
+8.?

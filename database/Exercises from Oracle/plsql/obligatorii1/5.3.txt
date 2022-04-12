@@ -1,0 +1,78 @@
+1.Cursor FOR loop
+
+1.
+It is a shortcut because the cursor is opened, a row is
+fetched once for each iteration in the loop, the loop
+exits when the last row is processed, and the cursor is
+closed automatically
+• The loop itself is terminated automatically at the end
+of the iteration when the last row has been fetched
+
+2.
+DECLARE
+ CURSOR countries_cur IS
+ SELECT country_name, national_holiday_name, national_holiday_date
+ FROM countries
+ WHERE region_id = 5;
+ countries_rec countries_cur%ROWTYPE;
+BEGIN
+ for countries_rec IN countries_cur
+ LOOP
+ DBMS_OUTPUT.PUT_LINE ('Country: ' || countries_rec.country_name
+ || ' National holiday: '|| countries_rec.national_holiday_name
+ || ', held on: '|| countries_rec.national_holiday_date);
+ END LOOP;
+END;
+
+3.
+DECLARE
+BEGIN
+ for countries_rec IN (SELECT country_name, national_holiday_name, national_holiday_date
+ FROM countries
+ WHERE region_id = 5)
+ LOOP
+ DBMS_OUTPUT.PUT_LINE ('Country: ' || countries_rec.country_name
+ || ' National holiday: '|| countries_rec.national_holiday_name
+ || ', held on: '|| countries_rec.national_holiday_date);
+ END LOOP;
+END;
+
+4.
+DECLARE
+BEGIN
+for countries_rec IN( SELECT country_name, highest_elevation, climate
+ FROM countries
+ WHERE highest_elevation>8000)
+ LOOP
+ DBMS_OUTPUT.PUT_LINE ('Country: ' || countries_rec.country_name
+ || ' highest elevation: '|| countries_rec.highest_elevation
+ || ', climate '|| countries_rec.climate);
+ END LOOP;
+END;
+
+5.
+declare
+Cursor language_cur is
+select country_name, count(*) as "Number of spoken languages"
+from spoken_languages s join countries c
+on s.country_id=c.country_id
+group by country_name
+having count(*)>=6
+order by region_name;
+
+v_country_name countries.country_name%type;
+v_number NUMBER(30);
+v_number1 NUMBER(30);
+
+BEGIN
+for v_language_rec IN language_cur
+LOOP
+v_number:=language_cur.count(*);
+dbms_output.put_line(v_language_rec.country_name || ' ' || v_language_rec.v_number);
+end loop;
+v_number:=%rowcount;
+dbms_output.put_line(v_number);
+
+end;
+--nu merge
+6.

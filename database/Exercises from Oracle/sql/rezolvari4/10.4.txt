@@ -1,0 +1,27 @@
+1.
+Correlated subquery is executed multiple times once for each intermediate result row from outer query 
+And for each row of the intermediate results inner correlated subquery is executed
+if the inner correlated subquery is satisfied, that row becomes part of final results from the whole query.
+Non-correlated subquery: result/s of inner query are calculated first and reused throughout the execution of outer query.
+2.
+WITH highs AS ( SELECT NVL(department_id,-1), MAX(salary) FROM employees GROUP BY NVL(department_id,-1))
+SELECT last_name, department_id, salary
+FROM employees
+WHERE (NVL(department_id,-1), salary) IN (SELECT * FROM highs );
+3.
+SELECT outer.last_name, outer.department_id, outer.salary
+FROM employees outer
+WHERE outer.employee_id  IN (SELECT DISTINCT inner.manager_id
+FROM employees  inner
+WHERE inner.manager_id = outer.employee_id)
+ORDER BY outer.department_id;
+
+4.
+WITH max_calc_sal AS (SELECT jobs.job_id , jobs.job_title, MAX(NVL(employees.salary,0)) AS job_actual_max 
+FROM employees RIGHT OUTER JOIN   jobs  ON  employees.job_id =  jobs.job_id   
+GROUP BY jobs.job_id,jobs.job_title)
+SELECT job_title, job_actual_max AS  job_total
+FROM max_calc_sal
+WHERE job_actual_max > (SELECT MAX(job_actual_max)/2 
+FROM max_calc_sal)
+ORDER BY job_total  DESC;

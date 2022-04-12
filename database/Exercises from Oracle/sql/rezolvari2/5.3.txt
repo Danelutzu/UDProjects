@@ -1,0 +1,30 @@
+1.decode
+2.conditional expression
+3.case
+
+1.
+SELECT duration,
+CASE duration
+WHEN '2 min' THEN 'shortest'
+WHEN '10 min' THEN 'longest'
+ELSE 'Other duration.'
+END AS "Play Times"
+FROM d_songs;
+2.
+SELECT  NVL(TO_CHAR(department_id), 'no_dept_id'), last_name, salary,
+CASE department_id
+WHEN 10 THEN 1.25*NVL(salary,0)
+WHEN 90 THEN 1.5*NVL(salary,0)
+WHEN 130 THEN 1.75*NVL(salary,0)
+ELSE NVL(salary,0)
+END AS "New Salary"
+FROM employees;
+3.
+SELECT first_name, last_name, manager_id, commission_pct,
+
+COALESCE(manager_id,commission_pct ,99999)
+as "Review"
+
+FROM employees
+
+WHERE department_id in (80, 90);

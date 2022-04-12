@@ -1,0 +1,64 @@
+1.ORDER BY
+2.ORDER BY <...>DESC
+3.sorting
+
+1.
+SELECT employee_id as "Number", first_name, last_name
+FROM employees
+ORDER BY "Number";
+2.
+SELECT title
+FROM d_cds
+ORDER BY year, title;
+3.
+SELECT title as "Our Collection" 
+FROM d_songs
+ORDER BY "Our Collection" DESC; 
+4.
+SELECT first_name,  last_name,  student_id ,  parking_number
+FROM students
+WHERE year = 1
+ORDER BY  last_name ,  first_name DESC;
+5.
+SELECT department_id , last_name, manager_id
+FROM employees
+WHERE employee_id<125
+ORDER BY  department_id DESC , last_name DESC;
+
+1.
+e. Selection
+2.
+c. ORDER BY 
+3.
+a. SELECT
+d. FROM
+4.
+a. Multiplication and division take priority over addition.
+b. Operators of the same priority are evaluated from left to right.
+c. Parentheses can be used to override the rules of precedence
+5.
+c. To select last names without duplicates
+6.
+d. SELECT first_name ||' ' ||last_name ||' is an '||staff_type||' for Global Fast Foods'
+7.
+all
+8.
+b. SELECT last_name FROM employees ORDER BY last_name
+9.
+d. SELECT employee_id AS "New Employees"
+10.
+none of them could have been returned from this query
+11.
+where last_name LIKE'St%';
+12.
+below 1900 and above 2100
+13.
+a. WHERE department_id NOT IN (101,102,103);
+b. WHERE last_name = 'King'
+c. WHERE start_date = '05-May-1998'
+d. WHERE salary BETWEEN 5000 AND 7000
+e. WHERE id != 10
+14.
+410
+
+

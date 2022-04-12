@@ -1,0 +1,232 @@
+1.if
+2.loop
+3.condition
+4.case
+
+1.
+ a conditional control structure in PL/SQL allows the use of simple logical tests to
+determine which statements are executed
+2.
+if
+case
+loop
+
+3.
+if then
+elsif
+else
+end if
+4.
+if then
+end if
+
+5.
+DECLARE
+v_country_name1 countries.country_name%type:='India';
+v_country_name2 countries.country_name%type:='United Kingdom';
+v_india_id countries.country_id%type:=91;
+v_UK_id countries.country_id%TYPE:=44;
+v_population1 countries.population%type;
+v_population2 countries.population%type;
+BEGIN 
+select countries.population into v_population1
+from countries
+where countries.country_id=91;
+
+begin
+select countries.population into v_population2
+from countries
+where countries.country_id=44;
+end;
+
+begin
+if v_population1>1000000000 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||'is greater than 1 billion having '||v_population1||'people');
+end if;
+end;
+
+begin
+if v_population2>1000000000 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name2||' is greater than 1 billion having '||v_population2||' people');
+else
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name2||' has less than 1 billion having '||v_population2||' people');
+end if;
+end;
+END;
+
+6.
+DECLARE
+v_country_name1 countries.country_name%type;
+v_country_id countries.country_id%type:=86;
+v_population1 countries.population%type;
+BEGIN
+begin 
+select countries.country_name into v_country_name1
+from countries
+where countries.country_id=v_country_id;
+end;
+
+BEGIN 
+select countries.population into v_population1
+from countries
+where countries.country_id=v_country_id;
+end;
+
+begin
+if v_population1>1000000000 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is greater than 1 billion having '||v_population1||' people');
+elsif v_population1>0 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is greater than 0 having '||v_population1||' people');
+elsif v_population1=0 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' 0 ');
+else
+ DBMS_OUTPUT.PUT_LINE('No data for this country');
+end if;
+end;
+
+END;
+the population of Peoples Republic of China is greater than 1 billion having 1095351995 people
+
+
+-------------------
+DECLARE
+v_country_name1 countries.country_name%type;
+v_country_id countries.country_id%type:=44;
+v_population1 countries.population%type;
+BEGIN
+begin 
+select countries.country_name into v_country_name1
+from countries
+where countries.country_id=v_country_id;
+end;
+
+BEGIN 
+select countries.population into v_population1
+from countries
+where countries.country_id=v_country_id;
+end;
+
+begin
+if v_population1>1000000000 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is greater than 1 billion having '||v_population1||' people');
+elsif v_population1>0 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is greater than 0 having '||v_population1||' people');
+elsif v_population1=0 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' 0 ');
+else
+ DBMS_OUTPUT.PUT_LINE('No data for this country');
+end if;
+end;
+
+END;
+
+the population of United Kingdom of Great Britain and Northern Ireland is greater than 0 having 60609153 people
+-----------------------------
+
+DECLARE
+v_country_name1 countries.country_name%type;
+v_country_id countries.country_id%type:=672;
+v_population1 countries.population%type;
+BEGIN
+begin 
+select countries.country_name into v_country_name1
+from countries
+where countries.country_id=v_country_id;
+end;
+
+BEGIN 
+select countries.population into v_population1
+from countries
+where countries.country_id=v_country_id;
+end;
+
+begin
+if v_population1>1000000000 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is greater than 1 billion having '||v_population1||' people');
+elsif v_population1>0 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is greater than 0 having '||v_population1||' people');
+elsif v_population1=0 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is 0 ');
+else
+ DBMS_OUTPUT.PUT_LINE('No data for this country');
+end if;
+end;
+
+END;
+
+the population of Antarctica is 0 
+
+------------------------------
+DECLARE
+v_country_name1 countries.country_name%type;
+v_country_id countries.country_id%type:=15;
+v_population1 countries.population%type;
+BEGIN
+begin 
+select countries.country_name into v_country_name1
+from countries
+where countries.country_id=v_country_id;
+end;
+
+BEGIN 
+select countries.population into v_population1
+from countries
+where countries.country_id=v_country_id;
+end;
+
+begin
+if v_population1>1000000000 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is greater than 1 billion having '||v_population1||' people');
+elsif v_population1>0 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is greater than 0 having '||v_population1||' people');
+elsif v_population1=0 then
+ DBMS_OUTPUT.PUT_LINE('the population of '||v_country_name1||' is 0 ');
+else
+ DBMS_OUTPUT.PUT_LINE('No data for this country');
+end if;
+end;
+
+END;
+
+No data for this country
+
+7.
+a.C
+b.B
+c.A
+d.
+Antarctica C
+Iraq A
+Spain B
+US A
+
+8.
+the v_num2 variable is not initialized so it will be an expression in if between a number and a null so it jumps to the else and executes the statements
+
+9.
+DECLARE
+ year NUMBER(4,0) :=1884;
+ v_num24 NUMBER(4,0);
+v_num34 NUMBER(4,0);
+ v_num2100 NUMBER(4,0);
+v_num3100 NUMBER(4,0);
+ v_num2400 NUMBER(4,0);
+v_num3400 NUMBER(4,0);
+BEGIN
+v_num24:=year/4;
+v_num34:=4*v_num24;
+
+v_num2100:=year/100;
+v_num3100:=100*v_num2100;
+
+v_num2400:=year/400;
+v_num3400:=400*v_num2400;
+
+  if v_num3400=year then
+   DBMS_OUTPUT.PUT_LINE('Leap year');
+  elsif v_num34=year and v_num3100<>year then
+      DBMS_OUTPUT.PUT_LINE('Leap year');
+else
+   DBMS_OUTPUT.PUT_LINE('Not a leap year');
+ end if;
+END;

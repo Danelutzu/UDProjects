@@ -1,0 +1,61 @@
+ EXECUTE IMMEDIATE 	SQL statements that cannot be parsed at compile time, but must be parsed at run time.  The text of these statements can, and probably will, change from execution to execution.  
+ NATIV DYNAMIC SQL	A statement that prepares (parses) and immediately executes a dynamic SQL statement or an anonymous PL/SQL block. 
+ 
+
+1.	Name three of the states that SQL statements go through.
+Parse:  inaintea executiei, se verifica corectitudinea sintaxei, existenta obiectelor etc
+Bind :  obtinerea valorilor variabilelor la c are se face referire
+Execute: executarea instructiunii
+ 
+2.	List three reasons why using the EXECUTE IMMEDIATE command is preferable to using the DBMS_SQL package. 
+-	Necesita mai putine linii de cod
+-	Se va executa mai repede, deoarece nu va fi nevoie sa se execute la fel de multe instructiuni ca la DBMS_SQL
+-	Este mai usor de utilizat 
+3.	The DEPARTMENTS and EMPLOYEES tables have two columns in common: department_id and manager_id. Create a procedure that uses a single EXECUTE IMMEDIATE call to select and display a department_id from either table, where the manager_id is 205. The procedure should accept the table name as an input parameter and display the department_id from that table. Remember to handle any possible exceptions that might be raised because we are selecting into a single variable, not using a cursor in this case. Test your procedure twice, once with each of the two tables. 
+
+CREATE OR REPLACE PROCEDURE sel_(p_table_name IN VARCHAR2)
+AS result NUMBER(10);
+BEGIN 
+ EXECUTE IMMEDIATE 'SELECT MAX(department_id) FROM ' || p_table_name || ' WHERE manager_id = 205 ' INTO result;
+  DBMS_OUTPUT.PUT_LINE(result);
+ END;
+		Pentru a evita eroarea in care se vor returna mai multe linii, am ales sa se returneze doar maximul dintre acele linii.
+
+begin 
+  sel_('DEPARTMENTS');
+END;
+ 
+4.	Create a procedure called how_many_rows to display the table name of any chosen table, and the number of rows it contains. Test the procedure on the COUNTRIES and REGIONS tables. 
+CREATE OR REPLACE PROCEDURE how_many_rows (p_table_name VARCHAR2) IS
+ v_stm VARCHAR(200);
+ result NUMBER(10);
+BEGIN 
+  v_stm := 'SELECT COUNT(*) FROM ' || p_table_name;
+  EXECUTE IMMEDIATE v_stm INTO result;
+  DBMS_OUTPUT.PUT_LINE(p_table_name || ' have '|| result || ' rows');
+end
+
+begin 
+ how_many_rows ('COUNTRIES');
+end;
+
+
+ 
+ 
+5.	Create a copy of the COUNTRIES table by executing the following SQL statement: 
+ 
+CREATE TABLE copy_countries AS SELECT * FROM countries; 
+ 
+Create a procedure that deletes all the rows from a chosen table and displays how many rows have been deleted. Test your procedure on the COPY_COUNTRIES table. 
+CREATE OR REPLACE PROCEDURE del_rows(p_table_name VARCHAR2) IS
+deleted NUMBER(10);
+BEGIN 
+EXECUTE IMMEDIATE 'DELETE FROM ' || p_table_name;
+deleted := SQL%ROWCOUNT;
+DBMS_OUTPUT.PUT_LINE( deleted || ' rows deleted');
+END; 
+
+begin 
+ del_rows('copy_countries');
+end;
+ 

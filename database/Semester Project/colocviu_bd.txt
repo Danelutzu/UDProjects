@@ -1,0 +1,277 @@
+1)
+a)
+create table client 
+(id_c NUMBER(2) CONSTRAINT client_id_c_pk PRIMARY KEY,
+nume VARCHAR2(25),
+adresa VARCHAR2(25));
+
+b)
+create table factura
+(id_f NUMBER(3) CONSTRAINT factura_id_f_pk PRIMARY KEY,
+data DATE,
+nr_slideuri NUMBER(2),
+cost_slide NUMBER(2),
+nr_zile NUMBER(2),
+total NUMBER(4),
+id_c NUMBER(2) CONSTRAINT factura_id_c_fk 
+REFERENCES client(id_c));
+
+c)
+create table localitate
+(id_l NUMBER(3) CONSTRAINT localitate_id_l_pk PRIMARY KEY,
+denumire VARCHAR2(25));
+
+d)
+create table difuzare
+(id_f NUMBER(3) CONSTRAINT difuzare_id_f_fk
+REFERENCES factura(id_f),
+id_l NUMBER(3) CONSTRAINT difuzare_id_l_fk
+REFERENCES localitate(id_l),
+datai DATE,
+datas DATE);
+
+f)
+ALTER TABLE factura
+ADD (tva NUMBER(3));
+
+2)
+a)
+ALTER TABLE factura
+ADD CONSTRAINT ck_nr_slideuri CHECK (nr_slideuri>=1 AND nr_slideuri<=40);
+
+b)
+ALTER TABLE client
+ADD CONSTRAINT ck_nume_adresa CHECK ((nume like 'firma%' and adresa='sediu social') or nume not like 'firma%');
+--------------------------------------------------------
+///PARTEA DE INSERT IN TABELE///
+!!!CLIENT!!!
+
+insert into client
+values(10,'Iocu','strada nr1 Falcau');
+
+insert into client
+values(20,'John','strada nr2 Sadau');
+
+insert into client
+values(30,'firma Hepa','sediu social');
+
+insert into client
+values(40,'Chelutu','Ciocanesti');
+
+insert into client
+values(50,'Florin','strada nr3 Hepa');
+
+!!!FACTURA!!!
+
+insert into factura
+values(110,'20-Sep-2019',4,10,5,200,10,0);
+
+insert into factura
+values(120,'30-Jan-2018',12,10,4,480,20,0);
+
+insert into factura
+values(130,'30-Jan-2019',16,10,5,800,30,0);
+
+insert into factura
+values(140,'16-Apr-2018',20,10,5,1000,40,0);
+
+insert into factura
+values(150,'16-Apr-2018',15,10,5,900,50,0);
+
+!!!LOCALITATE!!!
+
+insert into localitate
+values(210,'Slobozia');
+
+insert into localitate
+values(220,'Falcau');
+
+insert into localitate
+values(230,'Danila');
+
+insert into localitate
+values(240,'Sadau');
+
+insert into localitate
+values(250,'Hepa');
+
+!!!DIFUZARE!!!
+
+insert into difuzare
+values(110,210,to_date('16-Sep-2019','dd-Mon-yyyy'),to_date('20-Sep-2019','dd-Mon-yyyy'));
+
+insert into difuzare
+values(110,220,to_date('06-Sep-2019','dd-Mon-yyyy'),to_date('10-Sep-2019','dd-Mon-yyyy'));
+
+insert into difuzare
+values(120,220,to_date('27-Jan-2018','dd-Mon-yyyy'),to_date('30-Jan-2018','dd-Mon-yyyy'));
+
+insert into difuzare
+values(120,230,to_date('17-Jan-2018','dd-Mon-yyyy'),to_date('20-Jan-2018','dd-Mon-yyyy'));
+
+insert into difuzare
+values(130,230,to_date('26-Jan-2019','dd-Mon-yyyy'),to_date('30-Jan-2019','dd-Mon-yyyy'));
+
+insert into difuzare
+values(130,240,to_date('16-Jan-2019','dd-Mon-yyyy'),to_date('20-Jan-2019','dd-Mon-yyyy'));
+
+insert into difuzare
+values(140,240,to_date('12-Apr-2018','dd-Mon-yyyy'),to_date('16-Apr-2018','dd-Mon-yyyy'));
+
+insert into difuzare
+values(140,250,to_date('02-Apr-2018','dd-Mon-yyyy'),to_date('06-Apr-2018','dd-Mon-yyyy'));
+
+insert into difuzare
+values(150,250,to_date('12-Apr-2018','dd-Mon-yyyy'),to_date('16-Apr-2018','dd-Mon-yyyy'));
+
+insert into difuzare
+values(150,220,to_date('02-Apr-2018','dd-Mon-yyyy'),to_date('06-Apr-2018','dd-Mon-yyyy'));
+--------------------------------------------------------
+3)
+a)
+select * from factura 
+where total>750
+order by data desc,total
+
+b)
+select denumire
+from localitate
+where denumire like '%a';
+
+4)
+a)
+select c.nume 
+from client c join factura f 
+on(c.id_c=f.id_c)
+where f.data>to_date('01-Dec-2018','dd-Mon-yyyy') 
+AND f.data<to_date('01-Jan-2020','dd-Mon-yyyy');
+
+b)
+select d1.id_l, d2.id_l
+from difuzare d1 inner join difuzare d2 using(id_f)
+where d1.id_l<d2.id_l
+
+5)
+a)
+select l.denumire
+from localitate l join difuzare d using(id_l)
+where d.datai in
+(select datai
+from difuzare
+where datai between to_date('01-Sep-2019','dd-Mon-yyyy') and to_date('30-Sep-2019','dd-Mon-yyyy'))
+
+b)
+select c.nume
+from client c join factura f using(id_c)
+where f.data between to_date('01-Jan-2019','dd-Mon-yyyy') and to_date('31-Dec-2019','dd-Mon-yyyy') and f.total >= all
+(select total
+from factura
+where data between to_date('01-Jan-2019','dd-Mon-yyyy') and to_date('31-Dec-2019','dd-Mon-yyyy'))
+
+6)
+a)
+SELECT d.id_l , EXTRACT(DAY FROM f.data) AS zi, SUM(f.nr_slideuri) AS "nr_slideuri"
+FROM Difuzare d JOIN Factura f ON(d.id_f=f.id_f)
+WHERE EXTRACT(MONTH FROM f.data)=9
+GROUP BY ROLLUP(d.id_l, EXTRACT(DAY FROM f.data));
+
+b)
+select round(avg(total),2) as "Medie"
+from factura
+where data between to_date('01-Jan-2018','dd-Mon-yyyy') and to_date('31-Dec-2018','dd-Mon-yyyy')
+
+7)
+a)
+insert into client 
+values(1,'Georgescu Mircea','strada Georgescu')
+
+insert into factura
+values(123,'01-Oct-2019',4,4,10,160,1,0)
+
+b)
+insert into factura
+values(124,'02-Oct-2019',4,4,11,176,1,0)
+
+update factura
+set total=0.95*total
+where nr_zile>10
+
+c)
+delete 
+from factura
+where id_f not in(
+select id_f
+from difuzare)
+
+8)
+a)
+CREATE OR REPLACE TRIGGER datai_datas_trigg
+BEFORE INSERT or DELETE ON Difuzare
+FOR EACH ROW
+BEGIN
+
+if inserting then
+
+UPDATE Factura
+SET nr_zile=nr_zile+(:NEW.datas-:NEW.datai),
+total=(nr_zile+(:NEW.datas-:NEW.datai))*cost_slide*nr_slideuri
+WHERE id_f=:NEW.id_f;
+
+end if;
+
+if deleting then
+
+UPDATE Factura
+SET nr_zile=nr_zile-(:OLD.datas-:OLD.datai),
+total=nr_zile*cost_slide*nr_slideuri
+WHERE id_f=:OLD.id_f;
+
+end if;
+
+END;
+
+b)
+CREATE OR REPLACE TRIGGER data_order_trigg
+BEFORE INSERT OR UPDATE on Difuzare
+FOR EACH ROW
+DECLARE
+v_aux date;
+BEGIN
+if(:NEW.datai>:NEW.datas) then
+v_aux:= :NEW.datai;
+:NEW.datai:=:NEW.datas;
+:NEW.datas:=v_aux;
+end if;
+END;
+
+c)
+CREATE or replace VIEW Facturi_Ionescu_Paul AS
+SELECT id_f, data, nr_slideuri, cost_slide, nr_zile, total, denumire AS localitate,datai, datas
+FROM Client NATURAL JOIN Factura NATURAL JOIN Difuzare NATURAL JOIN Localitate
+WHERE nume = 'Ionescu Paul'; 
+
+
+CREATE or REPLACE TRIGGER Ionescu_Paul_trigg
+INSTEAD OF INSERT ON Facturi_Ionescu_Paul
+FOR EACH ROW
+DECLARE
+v_id_l number;
+v_id_c number;
+BEGIN
+SELECT id_l into v_id_l FROM localitate where  denumire=:NEW.localitate;
+
+SELECT id_c into v_id_c FROM client where nume ='Ionescu Paul';
+
+INSERT INTO FACTURA(id_f, data, nr_slideuri, cost_slide, nr_zile, total,id_c)
+VALUES(:NEW.id_f, :NEW.data, :NEW.nr_slideuri, :NEW.cost_slide, :NEW.nr_zile, :NEW.total, v_id_c);
+
+INSERT INTO difuzare(id_f,id_l,datai,datas) 
+values(:NEW.id_f,v_id_l,:NEW.datai,:NEW.datas);
+
+END;
+
+insert into client
+values(60,'Ionescu Paul','strada Ionescu');
+
+insert into Facturi_Ionescu_Paul
+values(169,'20-Oct-2020',10,10,10,1000,'Falcau',to_date('10-Oct-2020','dd-Mon-yyyy'),to_date('20-Oct-2020','dd-Mon-yyyy'));

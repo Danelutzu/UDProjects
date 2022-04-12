@@ -1,0 +1,180 @@
+1.
+CREATE TABLE o_jobs AS (SELECT * FROM jobs);
+CREATE TABLE o_employees AS (SELECT * FROM employees);
+CREATE TABLE o_departments AS (SELECT * FROM departments);
+2.
+INSERT INTO o_jobs (job_id, job_title, min_salary, max_salary)
+VALUES('HR_MAN', 'Human Resources Manager', 4500, 5500);
+3.
+INSERT INTO o_employees (employee_id, first_name, last_name, email, hire_date,
+job_id)
+VALUES(210, 'Ramon', 'Sanchez', 'RSANCHEZ', SYSDATE, 'HR_MAN');
+INSERT INTO o_employees (employee_id, first_name, last_name, email,
+hire_date, job_id)
+VALUES(211, 'Ramon2', 'Sanchez2', 'RSANCHEZ2', SYSDATE, 'HR_MAN');
+
+INSERT INTO o_employees (employee_id, first_name, last_name, email,
+hire_date, job_id)
+VALUES(212, 'Ramon3', 'Sanchez3', 'RSANCHEZ3', SYSDATE, 'HR_MAN');
+4.
+INSERT INTO o_departments(department_id, department_name)
+VALUES (210,'Human Resources');
+
+1.
+There could be anything wrong or something has changed and you cant let those old informations just be there when they changed.
+2.a.
+CREATE TABLE  Artists
+(artist_id NUMBER(5,0),
+first_name VARCHAR2(25) CONSTRAINT ait1_first_name_nn NOT NULL ENABLE,
+last_name VARCHAR2(30) CONSTRAINT ait1_last_name_nn NOT NULL ENABLE,
+band_name VARCHAR2(30),
+email VARCHAR2(75) CONSTRAINT ait1_email_nn NOT NULL ENABLE,
+hr_rate NUMBER(8,2) CONSTRAINT ait1_hr_rate_nn NOT NULL ENABLE,
+song_id NUMBER(5,0) CONSTRAINT ait1_song_id_nn NOT NULL ENABLE,
+CONSTRAINT ait1_id_pk PRIMARY KEY (artist_id)
+); 
+b.
+I must have artist_id, which I could take as 1 since I am inserting one
+First name and last name I must need, I could get it from artist in d_songs by string manipulation.
+band name I may skip but I can temporarily take it same as artist full name.
+song id I can take from d_songs
+email and hourly rate, d_songs will give no clue about, so, I will have to have two constraints:
+aka:email si hourly rate nu pot avea valori de null asa ca trebuie sa dau drop acestor constraints
+ALTER TABLE artists
+DROP CONSTRAINT ait_email_nn;
+ALTER TABLE artists
+DROP CONSTRAINT ait_hr_rate_nn;
+
+INSERT INTO artists (artist_id, first_name, last_name, band_name, email, hr_rate, song_id)
+SELECT 1 AS artist_id,
+CASE
+WHEN artist IS NULL THEN 'first name unknown'
+WHEN INSTR(artist,' ') = 0 THEN artist
+ELSE SUBSTR(artist,1,INSTR(artist,' ') -1)
+END
+AS first_name,
+CASE
+WHEN artist IS NULL THEN 'last name unknown'
+WHEN INSTR(artist,' ') = 0 THEN artist
+ELSE SUBSTR(artist,INSTR(artist,' '),LENGTH(artist))
+END
+AS last_name,
+artist as band_name,
+NULL as email,
+NULL as hr_rate,
+id as song_id
+
+FROM d_songs
+WHERE  ROWNUM =1 ;
+
+c.
+intampinam din nou problema ca nu putem introduce o valoare de null in tabel pe coloana song_id asa ca tre sa dam drop la constraint
+
+ALTER TABLE artists
+DROP CONSTRAINT ait_song_id_nn;
+
+insert into Artists  (artist_id, first_name, last_name, band_name, email, hr_rate, song_id)
+values(2,'Danutzu','Dragutzu','Haita Pinguinilor','h&p@gmail.com','50',NULL)
+
+d.
+ALTER TABLE artists
+ADD (valoare VARCHAR2(100));
+
+DROP TABLE better_artists;
+
+RENAME artists TO better_artists
+
+TRUNCATE TABLE better_artists;
+
+COMMENT ON TABLE better_artists IS 'cichita'
+
+3.
+alter table o_employees
+ADD("Termination" VARCHAR2(50) DEFAULT to_char(sysdate,'Month ddth,yyyy'))
+4.
+alter table o_employees
+ADD(start_date TIMESTAMP WITH LOCAL TIME ZONE);
+5.
+truncate table o_jobs
+columns are still there but the data is gone
+6.
+The DROP TABLE statement removes the definition of oracle table along with data and indexes. Recovery of a dropped table along with even indexes may be done but it's not guaranteed using FLASHBACK:
+
+TRUNCATE TABLE removes all rows and release storage space without possibility of rollback. It will be faster than DELETE. It won't remove columns from table.
+
+DELETE SQL statement will remove the rows but won't clean storage space.
+
+7.
+1. Newly created column is always put at last. But select can be written to return in desired manner, so no issues.
+2. Adding new column to table will always give null to pre-existing row's new field, even if, default value is assigned to new column.
+
+3. I can increase precision of a number column.
+4. In can increase length of character column.
+5. I can decrease precision of number column if: it contains only nulls till now or there is no row in table. Otherwise I will get ORA-00940: invalid ALTER command
+6. varchar2 can be decreased to length down to the largest value present currently in all rows.
+7. Datatype can be changed altogether if all values in this column are nulls.
+8. char can become varchar2 if column contain nulls or the size given is not less than any existing field for that column.
+9. varchar2  can become char if column contain nulls or the size given is not less than any existing field for that column.
+10. Change in default value is effective to new inserts only not the already present rows.
+11. A column containing values can be dropped if this is not referenced as foreign key in further tables. Also, data values in it not recovered after column drop.
+12. I can drop only one column at a time. Also, at least one column must remain, I cannot drop last column.
+13. Since dropping column may take time, it does modify each row before deleting, I can use SET UNUSED command as a replacement for practical purposes and DROP UNUSED later on.
+14. I can rename a column if I want.
+
+8.
+COMMENT ON TABLE o_jobs IS 'New job description added';
+
+SELECT table_name, comments
+FROM user_tab_comments WHERE LOWER(table_name) = 'o_jobs';
+
+9.
+rename o_jobs to o_job_description
+10.
+a.
+create table copy1_f_staffs
+as(select * from f_staffs)
+b.
+describe copy1_f_staffs
+c.
+drop table copy1_f_staffs
+d.
+select * from copy1_f_staffs
+e.
+DESCRIBE user_recyclebin ;
+f.
+SELECT object_name FROM user_recyclebin  WHERE LOWER(original_name) = 'copy1_f_staffs'
+
+BIN$sv0Dr8xsEP7gUxN+eGRI/w==$0
+g.
+FLASHBACK TABLE copy1_f_staffs TO BEFORE DROP;
+h.
+describe copy1_f_staffs
+
+11.
+a.
+select* from copy1_f_staffs
+b.
+UPDATE copy1_f_staffs
+SET salary = 12
+WHERE first_name = 'Sue' AND last_name = 'Doe';
+c.
+select * from copy1_f_staffs
+d.
+update copy1_f_staffs
+set salary=2
+WHERE first_name = 'Sue' AND last_name = 'Doe';
+e.
+SELECT * FROM copy_f_staffs;
+f.
+SELECT versions_operation, versions_starttime,  versions_endtime, id, first_name, last_name, birthdate, salary,overtime_rate,training,staff_type,manager_id, manager_budget,manager_target
+FROM copy_f_staffs
+VERSIONS BETWEEN SCN MINVALUE AND MAXVALUE
+WHERE id = 12;
+g.
+UPDATE copy_f_staffs
+SET salary = (SELECT salary
+FROM copy_f_staffs
+VERSIONS BETWEEN SCN MINVALUE AND MAXVALUE
+WHERE first_name = 'Sue' AND last_name = 'Doe' AND versions_operation IS NULL AND versions_starttime IS NULL)
+WHERE first_name = 'Sue' AND last_name = 'Doe';
+

@@ -1,0 +1,42 @@
+1.literals
+2.delimiters
+3.reserved words
+4.comments
+5.lexical units
+6.identifiers
+
+1.
+Identifier 			  Valid	   Invalid	 	Why Invalid?
+
+Today	valid
+Last name 	invalid because it has a space
+today’s_date	invalid because has a "'"
+number_of_days_in_february_this_	invalid because has more than 30 characters
+year	valid
+Isleap$year	valid
+#number	invalid because it doesn't start with a letter
+NUMBER#	valid
+Number1to7	valid
+
+2.
+create 	reserved
+make	not reserved
+table 	reserved
+seat	not reserved
+alter 	reserved
+rename	reserved
+row 	reserved
+number 	reserved
+web 	not reserved
+
+3.
+SELECT	reserved word
+:=	delimiter
+'TEST'	character literal
+FALSE	boolean literal
+-- new process	comment on a single line
+FROM	reserved word
+/* select the country with the
+highest elevation */	comment on multiple rows
+v_test	identifier
+4.09	numeric literal

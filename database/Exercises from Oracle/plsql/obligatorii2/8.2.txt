@@ -1,0 +1,90 @@
+
+
+Parameters
+Actual Parameter
+Formal Parameter
+
+
+
+
+1. prin parametrii se comunica date intre subprogram si locul unde este apelat subprg.
+
+2.
+A.
+CREATE OR REPLACE PROCEDURE get_country_info(p_countryid IN countries.country_id%TYPE, p_countryname OUT countries.country_name%TYPE, p_capitol OUT countries.capitol%TYPE)
+ AS
+BEGIN
+SELECT country_name, capitol INTO p_countryname, p_capitol FROM countries WHERE country_id = p_countryid ;
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('nu exista id: ' || p_countryid); END;
+
+B.
+DECLARE
+e_p_countryname countries.country_name%TYPE;
+e_p_capitol countries.capitol%TYPE;
+BEGIN 
+get_country_info(90,e_p_countryname,e_p_capitol );
+DBMS_OUTPUT.PUT_LINE('numele tarii: ' || e_p_countryname);
+DBMS_OUTPUT.PUT_LINE('capitala: ' || e_p_capitol );
+END;
+
+C.
+DECLARE
+e_p_countryname countries.country_name%TYPE;
+e_p_capitol countries.capitol%TYPE;
+BEGIN 
+get_country_info(95,e_p_countryname,e_p_capitol );
+DBMS_OUTPUT.PUT_LINE('numele tarii: ' || e_p_countryname);
+DBMS_OUTPUT.PUT_LINE('capitala: ' || e_p_capitol );
+END;
+
+NU EXISTA TARA CU ID 95, IMI ARUNCA EXCEPTIA
+
+3.
+Paramentrii formali sunt variable care sunt declarate in lista de parametrii si subprogramului
+Parametrii actuali sunt valori,variabile sau expresii care sunt trimisi la lista de param ai subprogramului
+
+4.
+A.
+CREATE OR REPLACE PROCEDURE get_country_count(p_region_id in countries.region_id%TYPE, p_elevation in countries.highest_elevation%TYPE) 
+IS  
+v_count NUMBER(4);
+BEGIN   
+SELECT COUNT(*) INTO v_count     
+FROM countries      
+WHERE region_id = p_region_id  AND  highest_elevation > p_elevation;   
+DBMS_OUTPUT.PUT_LINE ('Regiunea '||p_region_id|| ' contine'||v_count|| ' tari mai inalte decat '||p_elevation); END;
+
+B.
+BEGIN   get_country_count(5,2000); END; 
+
+C.
+DESCRIBE get_country_count
+
+D.
+CREATE OR REPLACE PROCEDURE get_country_count(p_region_id in countries.region_id%TYPE, p_elevation in countries.highest_elevation%TYPE, p_char in CHAR) 
+IS  
+v_count NUMBER(4);
+BEGIN   
+SELECT COUNT(*) INTO v_count     
+FROM countries      
+WHERE region_id = p_region_id  AND  highest_elevation > p_elevation AND substr(country_name,1,1) = p_char;   
+DBMS_OUTPUT.PUT_LINE ('Regiunea '||p_region_id|| ' contine'||v_count|| ' tari mai inalte decat '||p_elevation || ' numele incepe cu '||p_char); END;
+
+DESCRIBE get_country_count 
+
+
+E.
+DECLARE  
+ v_region_id  countries.region_id%TYPE:= 5;   
+v_elevation  countries.highest_elevation%TYPE := 2000;   
+v_char CHAR(1) := 'B'; 
+BEGIN   
+get_country_count(v_region_id, v_elevation, v_char); 
+END;
+
+F. 
+crapa programul
+
+

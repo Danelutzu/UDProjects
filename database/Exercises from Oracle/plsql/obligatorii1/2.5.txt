@@ -1,0 +1,53 @@
+1.explicit
+2.implicit
+
+1.a.579
+b.579
+c.the 2 strings were implicit converted to numbers, then added and then again converted to varchar2(20) 
+
+2.
+DECLARE
+ v_full_name VARCHAR2(40);
+ v_first_name varchar2(20):='Adrian';
+ v_last_name varchar2(20):='Minune';
+BEGIN
+ v_full_name := v_first_name||v_last_name ;
+ DBMS_OUTPUT.PUT_LINE(length(v_full_name));
+END;
+
+3.
+DECLARE
+my_date DATE := SYSDATE;
+v_last_day DATE;
+BEGIN
+DBMS_OUTPUT.PUT_LINE(TO_CHAR(my_date, 'Month dd, yyyy'));
+v_last_day := LAST_DAY(my_date);
+DBMS_OUTPUT.PUT_LINE(v_last_day);
+END;
+
+
+4.
+DECLARE
+my_date DATE := SYSDATE;
+v_last_day DATE;
+date_1 DATE;
+BEGIN
+date_1:=my_date+45;
+DBMS_OUTPUT.PUT_LINE(date_1);
+v_last_day := LAST_DAY(my_date);
+DBMS_OUTPUT.PUT_LINE(months_between(date_1,v_last_day));
+END;
+
+
+5.
+a.11
+b.11
+c.The first operation is  3*2 and then 5+6 and the result is saved in x and the returned
+
+6.
+TRUE. The condition (v_number > 30) is FALSE, and NOT FALSE = TRUE.
+
+7.
+Implicit datatype conversion can have a negative impact on performance
+• Implicit conversion depends on the context in which it occurs and may not work
+the same way in every case

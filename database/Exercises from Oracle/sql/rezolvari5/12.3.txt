@@ -1,0 +1,49 @@
+1.
+If no value is given while row creation and I want the field to take some predefined value
+2.
+CREATE TABLE copy_f_promotional_menus
+AS ( SELECT * FROM f_promotional_menus);
+
+ALTER TABLE copy_f_promotional_menus
+MODIFY(start_date DATE DEFAULT TRUNC(SYSDATE));
+
+UPDATE  copy_f_promotional_menus
+SET start_date = TRUNC(SYSDATE)
+WHERE   TRUNC(start_date) =    TO_DATE('10-Feb-2004','dd-Mon-yyyy');
+
+INSERT INTO copy_f_promotional_menus(code,name,start_date,end_date,give_away)
+VALUES('115','Back to School part 2',DEFAULT,NULL,'ballpen and highlighter again');
+
+INSERT INTO copy_f_promotional_menus(code,name,start_date,end_date,give_away)
+VALUES('120','New Customer',DEFAULT,TO_DATE('01-Jun-2005','dd-Mon-yyyy'),' 10% discount coupon');
+
+3.
+a.?
+b.
+create table manager_copy_d_cds
+as(select * from d_cds)
+
+c.
+insert into manager_copy_d_cds
+(cd_number,title,producer,year)
+values(20,'Hello World Here I Am','Middle Earth Records','1988')
+d.
+merge into manager_copy_d_cds m using d_cds d
+ON(d.cd_number=m.cd_number)
+WHEN MATCHED THEN UPDATE
+SET m.title=d.title,m.producer=d.producer,m.year=d.year
+WHEN NOT MATCHED THEN INSERT
+VALUES (d.cd_number,d.title,d.producer,d.year)
+4.
+insert first
+when salary>20000 then
+into special_sal
+values(employee_id,salary)
+else
+into sal_history
+values(employee_id,hire_date,salary)
+into mgr_history
+values(employee_id,manager_id,salary)
+
+select employee_id,salary,hire_date,manager_id
+from employees

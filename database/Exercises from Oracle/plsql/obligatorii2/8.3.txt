@@ -1,0 +1,141 @@
+
+
+OUT Parameter
+IN Parameter
+Named Notation
+Combination Notation
+Positional Notation
+IN OUT Parameter
+
+
+
+1.
+IN, OUT, IN OUT și modul implicit este de tip IN și nu poate fi schimbat
+
+2.
+A.
+CREATE OR REPLACE PROCEDURE find_area_pop(p_countryid IN countries.country_id%TYPE, p_countryname OUT VARCHAR2, p_population OUT NUMBER)
+AS
+BEGIN
+SELECT country_name, population INTO p_countryname, p_population FROM countries WHERE country_id = p_countryid;
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('No hay datos de este ID: ' || p_countryid); END;
+
+B.
+DECLARE
+e_p_countryname VARCHAR2(40);
+e_p_population NUMBER;
+BEGIN 
+find_area_pop(2,e_p_countryname,e_p_population);
+DBMS_OUTPUT.PUT_LINE('numele tarii: ' || e_p_countryname);
+DBMS_OUTPUT.PUT_LINE('populatia: ' || e_p_population);
+END;
+
+DECLARE
+e_p_countryname VARCHAR2(40);
+e_p_population NUMBER;
+BEGIN 
+find_area_pop(10,e_p_countryname,e_p_population);
+DBMS_OUTPUT.PUT_LINE('numele tarii: ' || e_p_countryname);
+DBMS_OUTPUT.PUT_LINE('populatia: ' || e_p_population);
+END;
+
+C.
+CREATE OR REPLACE PROCEDURE find_area_pop(p_countryid IN countries.country_id%TYPE, p_countryname OUT VARCHAR2,
+p_population OUT NUMBER, p_densi OUT NUMBER) AS
+v_area countries.area%TYPE;
+BEGIN
+SELECT country_name, population, area INTO p_countryname, p_population, v_area FROM countries
+WHERE country_id = p_countryid; p_densi := (p_population / v_area);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('nu exista id: ' || p_countryid); END;
+
+D.
+DECLARE
+e_p_countryid NUMBER; e_p_countryname VARCHAR2(40); e_p_population NUMBER; e_p_densi NUMBER;
+BEGIN
+find_area_pop(2, e_p_countryname, e_p_population, e_p_densi);
+DBMS_OUTPUT.PUT_LINE(', nume tara: ' || e_p_countryname || ', populatia: ' || e_p_population || ', densitate: ' || e_p_densi);
+END;
+
+
+3.
+CREATE OR REPLACE PROCEDURE numpatrat(p_num IN OUT NUMBER) AS
+BEGIN
+p_num := p_num * p_num;
+EXCEPTION
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('Eroare!');
+END;
+
+DECLARE
+v_num NUMBER := 4; 
+BEGIN
+numpatrat(v_num);
+DBMS_OUTPUT.PUT_LINE('patratul numarului: ' || v_num);
+END;
+
+4.
+- IN
+- OUT
+- IN OUT
+
+A.
+DECLARE
+e_p_countryid NUMBER; e_p_countryname VARCHAR2(40); e_p_population NUMBER; e_p_densi NUMBER;
+BEGIN
+find_area_pop(2,p_countryname=> e_p_countryname, p_population =>e_p_population,p_densi => e_p_densi);
+DBMS_OUTPUT.PUT_LINE(', nume tara: ' || e_p_countryname || ', populatia: ' || e_p_population || ', densitate: ' || e_p_densi);
+END;
+
+B.
+DECLARE
+e_p_countryid NUMBER; e_p_countryname VARCHAR2(40); e_p_population NUMBER; e_p_densi NUMBER;
+BEGIN
+find_area_pop(2,p_densi => e_p_densi, p_population =>e_p_population,p_countryname=> e_p_countryname);
+DBMS_OUTPUT.PUT_LINE(', nume tara: ' || e_p_countryname || ', populatia: ' || e_p_population || ', densitate: ' || e_p_densi);
+END;
+
+C.
+DECLARE
+e_p_countryid NUMBER; e_p_countryname VARCHAR2(40); e_p_population NUMBER; e_p_densi NUMBER;
+BEGIN
+find_area_pop(2,p_countryname, p_population =>e_p_population,p_densi => e_p_densi);
+DBMS_OUTPUT.PUT_LINE(', nume tara: ' || e_p_countryname || ', populatia: ' || e_p_population || ', densitate: ' || e_p_densi);
+END;
+
+5.
+
+Un argument nu poate fi gol, de aceea i se atribuie o valoare implicită în procedură
+CREATE OR REPLACE PROCEDURE numcuad(p_num NUMBER DEFAULT 5,
+p_nuum NUMBER := 5);
+
+
+6.
+SELECT COUNTRY_ID, COUNTRY_NAME
+FROM COUNTRIES
+WHERE COUNTRY_NAME= 'Romania';
+
+ID ul e 40
+
+CREATE OR REPLACE PROCEDURE find_area_pop(p_countryid NUMBER := 40, p_countryname OUT VARCHAR2,
+p_population OUT NUMBER, p_densi OUT NUMBER) AS
+v_area countries.area%TYPE;
+BEGIN
+SELECT country_name, population, area INTO p_countryname, p_population, v_area FROM countries
+WHERE country_id = p_countryid; p_densi := (p_population / v_area);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('nu exista id: ' || p_countryid); END;
+
+
+DECLARE
+e_p_countryid NUMBER := 40; e_p_countryname VARCHAR2(40); e_p_population NUMBER; e_p_densi NUMBER;
+BEGIN
+find_area_pop(e_p_countryid, e_p_countryname, e_p_population, e_p_densi);
+DBMS_OUTPUT.PUT_LINE(', nume tara: ' || e_p_countryname || ', populatia: ' || e_p_population || ', densitate: ' || e_p_densi);
+END;
+
+

@@ -1,0 +1,259 @@
+.386
+.model flat, stdcall
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;includem biblioteci, si declaram ce functii vrem sa importam
+includelib msvcrt.lib
+extern exit: proc
+extern printf: proc
+extern scanf:proc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;declaram simbolul start ca public - de acolo incepe executia
+public start
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;sectiunile programului, date, respectiv cod
+.data
+format_numar db "%d",0
+format_repetitie_iesire db "apasati 1 pentru a efectua o noua operatie,2 pentru a iesi",0
+numar dd 0
+mesaj db "Introduceti o expresie: ",0
+format_expresie db "%x %c %x %c", 0
+format_rez db "%x",0
+numere dd 20 dup(?)
+semne dd 20 dup(?)
+n1 dd 0
+semn1 dd 0
+n2 dd 0
+semn2 dd 0
+rez dd 0
+.code
+return macro nr
+	push nr
+	push offset format_rez
+	call printf
+	add esp, 8
+endm
+
+
+adunarea proc
+mov eax,n1
+mov ebx,n2
+add eax,ebx
+mov rez,eax
+
+ret
+adunarea endp
+
+scaderea proc
+mov eax,n1
+sub eax,n2
+mov rez,eax
+
+ret
+scaderea endp
+
+inmultirea proc
+mov eax,n1
+imul n2
+mov rez,eax
+
+ret
+inmultirea endp
+
+impartirea proc
+mov eax,n1
+mov ebx,n2
+idiv bl
+mov rez,eax
+
+ret
+impartirea endp
+	
+start:
+push offset mesaj
+call printf
+add esp,4
+
+	xor esi,esi
+	xor edi,edi
+citire:
+	push offset semn2
+    push offset n2
+	push offset semn1
+	push offset n1
+	push offset format_expresie
+	call scanf
+	add esp, 20
+	
+	mov edx, semn2
+	mov ecx, n2
+	mov ebx, semn1
+	mov eax, n1
+	
+	mov numere[esi], eax
+	mov semne[esi], ebx
+	mov numere[esi+4], ecx
+	mov semne[esi+4], edx
+	
+	add esi,8 
+	
+	cmp semn2,61
+	je afisare_operatii_primare
+	
+	cmp semn2,43
+	je citire
+	
+	cmp semn2,42
+	je citire
+	
+	cmp semn2,47
+	je citire
+	
+	cmp semn2,45
+	je citire	
+	
+	
+afisare_operatii_primare:
+xor esi,esi
+xor edi,edi
+jmp afisare1
+
+	afisare1:
+		mov edx,semne[esi]
+		cmp edx,61
+		je afisare_operatii_secundare
+		
+		cmp semne[esi],42
+		je operatii_primare
+		
+		cmp semne[esi],47
+		je operatii_primare
+		
+		add esi,4
+		jmp afisare1
+	operatii_primare:				
+		
+		mov eax,numere[esi]
+		mov n1,eax
+		mov eax,numere[esi+4]
+		mov n2,eax
+		
+		cmp semne[esi],42
+		je inmultire
+		
+		cmp semne[esi],47
+		je impartire
+		add esi,4
+		jmp afisare1
+		
+	inmultire:
+		push offset rez
+		push offset n2
+		push offset n1
+		call inmultirea
+	
+		mov eax,'+'
+		mov semne[esi],eax
+		mov eax,0
+		mov numere[esi],eax
+		jmp chestii1
+		
+	impartire:
+		push offset rez
+		push offset n2
+		push offset n1
+		call impartirea
+		
+		mov eax,'+'
+		mov semne[esi],eax
+		mov eax,0
+		mov numere[esi],eax
+		jmp chestii1
+	
+	chestii1:
+	
+	mov eax,rez
+	mov numere[esi+4],eax
+	add esi,4
+	jmp	afisare1
+	
+		
+afisare_operatii_secundare:
+xor esi,esi
+xor edi,edi
+jmp afisare2
+
+	afisare2:
+	
+		cmp semne[esi],61
+		je afisare_finala
+		
+		
+		
+		cmp semne[esi],43
+		je operatii_secundare
+		
+		cmp semne[esi],45
+		je operatii_secundare
+		
+		add esi,4
+		jmp afisare2
+	operatii_secundare:				
+		
+		mov eax,numere[esi]
+		mov n1,eax
+		mov eax,numere[esi+4]
+		mov n2,eax
+		
+		cmp semne[esi],43
+		je adunare
+		
+		cmp semne[esi],45
+		je scadere
+		
+	adunare:
+		push offset rez
+		push offset n2
+		push offset n1
+		call adunarea
+	
+		jmp chestii2
+		
+	scadere:
+		push offset rez
+		push offset n2
+		push offset n1
+		call scaderea
+		
+		jmp chestii2
+	
+	chestii2:
+	
+	mov eax,rez
+	mov numere[esi+4],eax
+	add esi,4
+	jmp	afisare2
+
+	afisare_finala:
+		push rez
+		push offset format_rez
+		call printf
+		add esp,8
+	
+	push offset format_repetitie_iesire
+	call printf
+	add esp,4
+
+	push offset numar
+	push offset format_numar
+	call scanf
+	add esp,8
+
+	cmp numar,1
+	je start
+	jne exit
+	push 0
+	call exit
+end start

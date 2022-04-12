@@ -1,0 +1,92 @@
+1.variables
+2.parameters
+
+1.
+a. Variables can be assigned to the output of a pl/sql subprogram
+b.Variables can be assigned values in the declarative section of a PL/SQL block
+c.Variables can be passed as parameters to subprograms
+
+2.
+number_of_copies PLS_INTEGER;->valid
+printer_name CONSTANT VARCHAR2(10);->invalid
+deliver_to VARCHAR2(10) := Johnson;->invalid
+by_when DATE := SYSDATE+1;->valid
+
+3.
+a. true
+b. false
+c.false
+d.false
+e.false
+
+4.
+CREATE FUNCTION num_characters (p_string IN VARCHAR2)
+RETURN INTEGER AS
+ v_num_characters INTEGER;
+BEGIN
+ SELECT LENGTH(p_string) INTO v_num_characters
+ FROM dual;
+ RETURN v_num_characters;
+END;
+
+DECLARE
+ v_length_of_string INTEGER;
+BEGIN
+ v_length_of_string := num_characters('Oracle Corporation');
+ DBMS_OUTPUT.PUT_LINE(v_length_of_string);
+END;
+
+18
+
+5.
+declare 
+v_country_name varchar(30):='French Republic';
+v_lowest_elevation number(5);
+v_highest_elevation number(5);
+begin
+select lowest_elevation,highest_elevation into 
+v_lowest_elevation,v_highest_elevation
+from countries
+where country_name=v_country_name;
+DBMS_OUTPUT.PUT_LINE('lowest elevation: '||v_lowest_elevation);
+DBMS_OUTPUT.PUT_LINE('highest elevation: '||v_highest_elevation);
+end;
+
+lowest elevation: -2
+highest elevation: 4807
+
+
+
+declare 
+v_country_name varchar(30):='Japan';
+v_lowest_elevation number(5);
+v_highest_elevation number(5);
+begin
+select lowest_elevation,highest_elevation into 
+v_lowest_elevation,v_highest_elevation
+from countries
+where country_name=v_country_name;
+DBMS_OUTPUT.PUT_LINE('lowest elevation: '||v_lowest_elevation);
+DBMS_OUTPUT.PUT_LINE('highest elevation: '||v_highest_elevation);
+end;
+
+lowest elevation: -4
+highest elevation: 3776
+
+
+declare 
+v_country_name varchar(30):='United States of America';
+v_lowest_elevation number(5);
+v_highest_elevation number(5);
+begin
+select lowest_elevation,highest_elevation into 
+v_lowest_elevation,v_highest_elevation
+from countries
+where country_name=v_country_name;
+DBMS_OUTPUT.PUT_LINE('lowest elevation: '||v_lowest_elevation);
+DBMS_OUTPUT.PUT_LINE('highest elevation: '||v_highest_elevation);
+end;
+
+lowest elevation: -86
+highest elevation: 6194
+

@@ -1,0 +1,187 @@
+1.predefined Oracle server errors
+2.PRAGMA EXCEPTION_INIT 
+3.SQLERRM
+4.Non-predefined Oracle server errors
+5.SQLCODE
+
+1-2.
+-Predefined Oracle server
+error
+
+You need not declare these exceptions.
+They are predefined by the Oracle server
+and are raised implicitly (automatically).
+
+-Non-predefined Oracle
+server error
+
+Declare within the declarative section and
+allow the Oracle Server to raise them
+implicitly (automatically).
+
+-User-defined error 
+
+Declare within the declarative section,
+and raise explicitly
+
+
+3.
+a. 
+no data found error is displayed because there is no region with id=1
+
+b.
+DECLARE
+ v_number NUMBER(6, 2) := 100;
+ v_region_id regions.region_id%TYPE;
+ v_region_name regions.region_name%TYPE;
+BEGIN
+ SELECT region_id, region_name INTO v_region_id, v_region_name
+ FROM regions
+ WHERE region_id = 1;
+ DBMS_OUTPUT.PUT_LINE('Region: ' || v_region_id || ' is: ' || v_region_name);
+ v_number := v_number / 0;
+EXCEPTION 
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('try using another region_id');
+END;
+
+c.
+now we are trying to divide v_number by zero 
+
+d.
+DECLARE
+ v_number NUMBER(6, 2) := 100;
+ v_region_id regions.region_id%TYPE;
+ v_region_name regions.region_name%TYPE;
+BEGIN
+ SELECT region_id, region_name INTO v_region_id, v_region_name
+ FROM regions
+ WHERE region_id = 29;
+ DBMS_OUTPUT.PUT_LINE('Region: ' || v_region_id || ' is: ' || v_region_name);
+ v_number := v_number / 0;
+EXCEPTION 
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('try using another region_id');
+WHEN ZERO_DIVIDE THEN
+DBMS_OUTPUT.PUT_LINE('try using another number to divide your variable');
+END;
+
+4.
+a.
+it generates an error because the cursor is not open
+
+b.
+DECLARE
+ CURSOR regions_curs IS
+ SELECT * FROM regions
+ WHERE region_id < 20
+ ORDER BY region_id;
+ regions_rec regions_curs%ROWTYPE;
+ v_count NUMBER(6);
+BEGIN
+ LOOP
+ FETCH regions_curs INTO regions_rec;
+ EXIT WHEN regions_curs%NOTFOUND;
+ DBMS_OUTPUT.PUT_LINE('Region: ' || regions_rec.region_id
+|| ' Name: ' || regions_rec.region_name);
+ END LOOP;
+ CLOSE regions_curs;
+ SELECT COUNT(*) INTO v_count
+ FROM regions
+ WHERE region_id = 1;
+ DBMS_OUTPUT.PUT_LINE('The number of regions is: ' || v_count);
+EXCEPTION
+WHEN INVALID_CURSOR THEN
+DBMS_OUTPUT.PUT_LINE('be careful on the key therms of a cursor: open,fetch,close');
+END;
+
+c.
+the block succesfully executes now, but there is no region with the id=1 
+so the number of regions that have that id is 0
+
+5.
+a.
+
+DECLARE
+ v_language_id languages.language_id%TYPE;
+ v_language_name languages.language_name%TYPE;
+BEGIN
+ SELECT language_id, language_name INTO v_language_id, v_language_name
+ FROM languages
+ WHERE LOWER(language_name) LIKE 'ba%'; -- for example 'ab%'
+ INSERT INTO languages(language_id, language_name)
+ VALUES(80, null);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('there is not data found for this language_name');
+WHEN TOO_MANY_ROWS THEN
+DBMS_OUTPUT.PUT_LINE('there are too many rows found for this language_name');
+WHEN DUP_VAL_ON_INDEX THEN
+DBMS_OUTPUT.PUT_LINE('be careful on your index');
+END;
+
+there are too many rows found for this language_name
+
+b.
+
+the language name has a not null constraint 
+
+c.
+  DECLARE
+ e_not_null EXCEPTION;
+PRAGMA EXCEPTION_INIT(e_not_null,-01400);
+ v_language_id languages.language_id%TYPE;
+ v_language_name languages.language_name%TYPE;
+BEGIN
+ SELECT language_id, language_name INTO v_language_id, v_language_name
+ FROM languages
+ WHERE LOWER(language_name) LIKE 'al%'; -- for example 'ab%'
+ INSERT INTO languages(language_id, language_name)
+ VALUES(80, null);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('there is not data found for this language_name');
+WHEN TOO_MANY_ROWS THEN
+DBMS_OUTPUT.PUT_LINE('there are too many rows found for this language_name');
+WHEN DUP_VAL_ON_INDEX THEN
+DBMS_OUTPUT.PUT_LINE('be careful on your index');
+WHEN e_not_null THEN
+DBMS_OUTPUT.PUT_LINE('be careful on not null constraints');
+END;
+
+1.
+CREATE TABLE error_log
+(who
+VARCHAR2(30),
+ when DATE,
+error_code NUMBER(6),
+error_message VARCHAR2(255));
+
+
+DECLARE
+v_error_code error_log.error_code%type;
+v_error_message error_log.error_message%type;
+v_language_id languages.language_id%TYPE;
+v_language_name languages.language_name%TYPE;
+BEGIN  
+ SELECT language_id, language_name INTO v_language_id, v_language_name
+ FROM languages
+ WHERE LOWER(language_name) LIKE 'al%'; -- for example 'ab%'
+ INSERT INTO languages(language_id, language_name)
+ VALUES(80, 'gicule');
+EXCEPTION
+WHEN OTHERS THEN
+ROLLBACK;
+v_error_code := SQLCODE;
+v_error_message := SQLERRM;
+INSERT INTO error_log(who, when, error_code,
+error_message)
+VALUES(USER, SYSDATE, v_error_code, v_error_message);
+END;
+
+
+APEX_PUBLIC_USER	19-Nov-2020	-1422	ORA-01422: exact fetch returns more than requested number of rows
+APEX_PUBLIC_USER	19-Nov-2020	100	ORA-01403: no data found
+APEX_PUBLIC_USER	19-Nov-2020	-1400	ORA-01400: cannot insert NULL into ("RO_A849_SQL_S01"."LANGUAGES"."LANGUAGE_NAME")
+APEX_PUBLIC_USER	19-Nov-2020	-1	ORA-00001: unique constraint (RO_A849_SQL_S01.LANG_PK) violated
+

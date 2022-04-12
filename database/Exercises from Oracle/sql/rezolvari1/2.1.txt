@@ -1,0 +1,73 @@
+1.DISTINCT
+2.concatenation operator
+3.literal values
+4.DESCRIBE
+
+1.
+SELECT last_name as "Last Name", address || ', ' || city || ', ' || state || '-' || zip || CHR(10) || '(Phone-' || phone_number || ')'  as "Mailing Address"
+FROM f_customers;
+2.
+a.
+SELECT first_name
+FROM f_staffs;
+b.
+SELECT first_name ||' '|| last_name AS "DJs on Demand Clients"
+FROM d_clients;
+c.
+SELECT DISTINCT quantity
+FROM f_order_lines;
+d.
+SELECT order_number
+FROM f_orders;
+3.
+SELECT '***' || first_name || '***' || first_name || '***' as "Super Star"
+ FROM f_staffs;
+4.
+d. No rows will be returned.
+5.
+SELECT last_name AS "EMPLOYEE LAST NAME",salary AS "CURRENT SALARY", round(salary+salary*0.5,2) AS "SALARY WITH 5% RAISE"
+FROM F_STAFFS;
+6.
+DESCRIBE EMPLOYEES;
+first_name,phone_number,salary,commission_pct,manager_id,department_id,bonus are nullable
+it means that row is valid even if the fields corresponding to these columns do not contain any data
+7.
+SELECT cd_number AS "Inventory Item",title AS "CD Title",PRODUCER AS "Music Producer", Year AS "Year Purchased"
+FROM D_CDS;
+8.
+TRUE
+9.
+true
+10.
+it must be a "," after last_name
+the correct operator is"*" ,not "x"
+salary instead of sal
+"ANNUAL SALARY"
+11.
+*
+12.
+b.*
+13.
+b.projection
+14.
+d."Employee"
+15.
+b. SELECT salary* (6 + 100)
+16.
+c. SELECT 'Mr./Ms. '||first_name||' '||last_name ||' '||'is an employee of our company.' AS
+"Employees"
+FROM employees ;
+17.
+c. Keywords cannot be abbreviated or split across lines
+18.
+b. SELECT DEPARTMENT_ID, LAST_NAME, FIRST_NAME
+FROM employees;
+
+d. SELECT department_id, last_name, first_name
+FROM employees;
+19.
+a. SELCT * FROM employees;
+20.
+SELECT '+++' || first_name || '+++' || first_name || '+++' as "Super Star"
+ FROM f_staffs;
+

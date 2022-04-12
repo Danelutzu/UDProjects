@@ -1,0 +1,33 @@
+1.
+SELECT trigger_name, trigger_type, triggering_event,
+table_name, status, trigger_body
+FROM USER_TRIGGERS
+
+2.
+alter trigger copy_emp13_chg disable
+
+
+3.
+SELECT dbms_metadata.get_ddl('TRIGGER', 'COPY_EMP13_CHG')
+  FROM dual;
+CREATE OR REPLACE EDITIONABLE TRIGGER "RO_A849_SQL_S01"."COPY_EMP13_CHG" 
+AFTER INSERT OR DELETE ON copy_emp13 
+FOR EACH ROW 
+BEGIN 
+IF DELETING THEN 
+insert INTO audit_table VALUES('Deleted', user , systimestamp,:OLD.employee_id); 
+END IF;
+ IF INSERTING THEN 
+insert INTO audit_table VALUES('Inserted', user , systimestamp,:OLD.employee_id);
+ END IF;
+ END;
+
+ ALTER TRIGGER "RO_A849_SQL_S01"."COPY_EMP13_CHG" DISABLE
+
+4.
+drop trigger copy_emp13_chg
+
+yes .it is deleted
+5.?
+
+

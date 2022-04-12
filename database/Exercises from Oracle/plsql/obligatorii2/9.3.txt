@@ -1,0 +1,28 @@
+Vocabulary:
+
+1.DBA_* tables
+2.ALL_*tables
+3.Data dictionary
+4.USER_* tables
+
+
+Try it/Solve it:
+
+1.A.True
+B.False
+C.True
+D.False
+
+2.Super-View DICTIONARY
+VIweing the Dictionary using Application Express 
+Viewing Information in the Dictionary
+
+*de citit in pdf
+
+3.SELECT object_type, object_name FROM USER_OBJECTS ORDER BY object_type;
+
+4.SELECT object_type, object_name FROM USER_OBJECTS WHERE object_type='FUNCTION';
+
+5.
+
+6.SELECT * FROM DICT;

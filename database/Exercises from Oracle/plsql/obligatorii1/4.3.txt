@@ -1,0 +1,70 @@
+1.basic loop
+2.exit 
+
+1.
+when we have some statements that should execute multiple times
+
+2.
+basic
+for
+while
+
+3.
+exit
+
+4.
+
+DECLARE
+v_country_id countries.country_id%type:=1;
+v_country_name countries.country_name%type;
+BEGIN
+loop
+ select countries.country_id,countries.country_name
+into v_country_id,v_country_name
+from countries
+where countries.country_id=v_country_id;
+DBMS_OUTPUT.PUT_LINE(v_country_id||' '||v_country_name);
+v_country_id:=v_country_id+1;
+if v_country_id>3 then exit;
+end if;
+end loop;
+END;
+
+5.
+
+DECLARE
+v_country_id countries.country_id%type:=1;
+v_country_name countries.country_name%type;
+BEGIN
+loop
+ select countries.country_id,countries.country_name
+into v_country_id,v_country_name
+from countries
+where countries.country_id=v_country_id;
+DBMS_OUTPUT.PUT_LINE(v_country_id||' '||v_country_name);
+v_country_id:=v_country_id+1;
+exit when v_country_id>3;
+
+end loop;
+END;
+
+
+6.
+DROP TABLE messages;
+
+CREATE TABLE messages (results NUMBER(2));
+
+declare 
+v_nr messages.results%type:=1;
+begin
+loop
+if v_nr<>6 and v_nr<>8 then
+insert into messages
+values(v_nr);
+end if;
+v_nr:=v_nr+1;
+exit when v_nr>10;
+end loop;
+end;
+
+select * from messages

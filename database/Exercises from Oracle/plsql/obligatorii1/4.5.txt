@@ -1,0 +1,23 @@
+1.
+BEGIN
+FOR v_nn IN 60..65 LOOP
+FOR v_mmm IN 100..110 LOOP
+DBMS_OUTPUT.PUT_LINE('The license plate is: ' ||v_nn||' '||v_mmm);
+END LOOP;
+END LOOP;
+END;
+
+2.
+declare
+v_sum number(6);
+BEGIN
+<<outer_loop>>
+FOR v_nn IN 60..65 LOOP
+<<inner_loop>>
+FOR v_mmm IN 100..110 LOOP
+v_sum:=v_nn+v_mmm;
+exit outer_loop when v_sum>172;
+DBMS_OUTPUT.PUT_LINE('The license plate is: ' ||v_nn||' '||v_mmm||' and their sum is: '||v_sum);
+END LOOP;
+END LOOP;
+END;

@@ -1,0 +1,29 @@
+1.
+a.single
+b.multiple
+c.single
+d.multiple
+e.single
+f.single
+2.
+AVG-finds the average value in group of rows
+COUNT-counts the number of rows input
+MAX-finds the highest value in the group of rows
+MIN-finds the lowest value in the group of rows
+SUM-adds values in group of rows
+3.
+SELECT AVG(salary)
+FROM employees
+8775
+SELECT COUNT(salary)
+FROM employees
+20
+SELECT MAX(salary)
+FROM employees
+24000
+SELECT MIN(salary)
+FROM employees
+2500
+SELECT SUM(salary)
+FROM employees
+175500

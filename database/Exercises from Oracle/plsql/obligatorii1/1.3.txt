@@ -1,0 +1,39 @@
+1.anonymous pl/sql block
+2.functions
+3.subprograms
+4.compiler
+5.procedures
+
+1.
+
+		Optional or Mandatory?	Describe what is included in this section
+DECLARE		Optional 		Variables, cursors, userdefined exceptions
+BEGIN		Mandatory 		SQL statementsPL/SQL statements 
+EXCEPTION	Optional  		Actions to perform whenerrors occur  
+END;		Mandatory 		End; (with semicolon)
+
+2.
+a. nu se executa pentru ca nu are variabile si
+ pentru ca nu se intampla nimic intre begin si end
+
+b. nu se executa pentru ca avem un end; fara un begin
+
+c.nu se exectuta pentru ca nu se intampla nimic intre begin si end
+
+d.acest bloc se va executa
+
+3.
+a.pl/slq blocks that have no names are called anonymous.
+b.procedures and functions
+
+4.
+BEGIN
+ DBMS_OUTPUT.PUT_LINE('Hello World');
+ END;
+
+5.
+DECLARE
+ v_date DATE:=SYSDATE;
+ BEGIN
+ DBMS_OUTPUT.PUT_LINE('In six months the date will be '||add_months(v_date,6));
+ END;

@@ -1,0 +1,16 @@
+1.rollup
+2.cube
+3.grouping sets
+
+1.
+SELECT  manager_id, job_id, SUM(salary) , GROUPING(manager_id), GROUPING(job_id)
+FROM employees
+GROUP BY ROLLUP(manager_id, job_id);
+2.
+SELECT  manager_id, job_id, SUM(salary) , GROUPING(manager_id), GROUPING(job_id)
+FROM employees
+GROUP BY CUBE(manager_id, job_id);
+3.
+SELECT  department_id,manager_id, job_id, SUM(salary) ,GROUPING(DEPARTMENT_ID), GROUPING(manager_id), GROUPING(job_id)
+FROM employees
+GROUP BY Grouping sets ((department_id,manager_id,job_id),(manager_id,job_id),(department_id,manager_id))

@@ -1,0 +1,107 @@
+1.exception handler
+2.exception 
+
+1.
+When an exception is raised, the rest of the execution
+section of the PL/SQL block is not executed
+
+2.
+I need to include exception handlers in the code
+to address these problems
+
+3.
+−Protects the user from errors (frequent errors, unhelpful
+error messages, and software crashes can frustrate
+users/customers, and this is not good)
+−Protects the database from errors (data can be lost or
+overwritten)
+−Errors can be costly, in time and resources (processes may
+slow as operations are repeated or errors are investigated)
+
+4.
+a.
+there are more than 1 employee in the department that has id =80 so it generates an error
+when trying to fit in one variable the information in more rows
+b.
+DECLARE
+ v_jobid employees.job_id%TYPE;
+BEGIN
+ SELECT job_id INTO v_jobid
+ FROM employees
+ WHERE department_id = 80;
+EXCEPTION 
+WHEN TOO_MANY_ROWS THEN
+DBMS_OUTPUT.PUT_LINE('Your select statement retrieved
+multiple rows. Consider using a
+cursor.');
+END;
+
+5.
+blocul ridica o exceptie pentru ca se incalca constrangerea de unicitate a primary key-ului pentru coloana department_id
+incercandu se a se insera un id deja existent
+
+6.
+CREATE TABLE emp_temp AS SELECT * FROM employees;
+
+SELECT * FROM emp_temp WHERE department_id = 10;
+
+DELETE FROM emp_temp WHERE employee_id !=227 and department_id=10
+
+10
+when executing with id=10 the block correctly executes because 
+there is only one employee left,introduces into v_employee_id and v_last name 
+the data where id=10 ; 
+
+20
+an exception occurs because there are too many rows returned by the select statement
+
+30
+an exception occurs because there is no employee in department with the id =30
+
+7.
+DECLARE
+ v_employee_id emp_temp.employee_id%TYPE;
+ v_last_name emp_temp.last_name%TYPE;
+BEGIN
+ SELECT employee_id, last_name INTO v_employee_id, v_last_name
+ FROM emp_temp
+ WHERE department_id = 20; -- run with values 10, 20, and 30
+ DBMS_OUTPUT.PUT_LINE('The SELECT was successful');
+EXCEPTION
+WHEN TOO_MANY_ROWS THEN
+DBMS_OUTPUT.PUT_LINE('THE SELECT STATEMENT RETURNS MORE THAN ONE ROW,CONSIDER USING A CURSOR ');
+
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('THE SELECT STATEMENT RETURNS NO VALUE ,TRY MODIFYING THE DEPARTMENT_ID ');
+ 
+ WHEN OTHERS THEN
+ DBMS_OUTPUT.PUT_LINE('An exception has occurred');
+END;
+
+8.
+−Always add exception handlers whenever there is a possibility
+of an error occurring
+−Learn the names and causes of the predefined exceptions
+−Test your code with different combinations of bad data to see
+what potential errors arise
+
+9.
+the variable is initialized with less memory than it was declared so it generates an error
+
+10.
+DECLARE
+ v_number NUMBER(4);
+BEGIN
+ v_number := 9999;
+EXCEPTION
+ WHEN OTHERS THEN
+ DBMS_OUTPUT.PUT_LINE('An exception has occurred');
+END;
+
+we need to raise the memory of the variable and it's all fine with this statement
+
+11.
+this block generates an error because the data type of the variable is number 
+and then we are trying to give it a string as value. If it generates this value, other attributions 
+are ignored so the variable value remains the one declared outside the block that generates the error
+ 

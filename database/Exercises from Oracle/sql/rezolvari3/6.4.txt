@@ -1,0 +1,38 @@
+1.self join
+2.hierarchical query
+3.level
+4.start with
+5.connect by
+
+1.
+select e.last_name as "Employee",e.phone_number as "Emp#",m.last_name as "Manager",m.phone_number as "Mgr#"
+from employees e inner join employees m
+ON(e.employee_id=m.manager_id)
+2.
+select e.last_name as "Employee",e.phone_number as "Emp#",m.last_name as "Manager",m.phone_number as "Mgr#"
+from employees e left outer join employees m
+ON(e.employee_id=m.manager_id)
+ORDER BY e.last_name
+3.
+select e.last_name as "Employee",e.hire_date as "Emp Hired",m.last_name as "Manager",m.hire_date as "Mgr Hired"
+from employees e left outer join employees m
+ON(e.employee_id=m.manager_id)
+where e.hire_date<m.hire_date
+4.
+select last_name,salary,department_id
+from employees 
+Start with first_name= 'Lex' AND last_name ='De Haan'
+CONNECT BY PRIOR employee_id = manager_id;
+5.
+there is nothing wrong with this statement
+6.
+SELECT LPAD(last_name, LENGTH(last_name) + (LEVEL-1)*2, '-') "organization chart "
+FROM employees
+START WITH last_name = ( SELECT last_name from employees WHERE manager_id IS NULL)
+CONNECT BY PRIOR employee_id = manager_id;
+7.
+SELECT LPAD(last_name, LENGTH(last_name) + (LEVEL-1)*2, '-') "organization chart "
+FROM employees
+START WITH last_name = ( SELECT last_name from employees WHERE manager_id IS NULL)
+CONNECT BY PRIOR employee_id = manager_id and last_name <>'De Haan';
+

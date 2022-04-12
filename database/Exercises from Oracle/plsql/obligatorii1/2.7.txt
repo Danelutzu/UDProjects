@@ -1,0 +1,10 @@
+DECLARE
+ myvar1 VARCHAR2(20);
+ myvar2 number(4);
+BEGIN
+SELECT country_name INTO myvar1
+FROM countries WHERE country_id = 421;
+myvar2 := '1234';
+ MYVAR2 := myvar2 * 2;
+ DBMS_OUTPUT.PUT_LINE(myvar1);
+ End;

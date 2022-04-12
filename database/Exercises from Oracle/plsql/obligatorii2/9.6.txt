@@ -1,0 +1,98 @@
+Definer’s Rights	Routines are bound to the schema in which they reside. 
+Invoker’s Rights 	Routines let you centralize data retrieval whereas multiple users can manage their own data using a single code base. 
+Autonomous Transaction 	Subprograms that allow your session to have two or more active transactions at the same time 
+
+The following questions illustrate how definer’s and invoker’s rights WOULD work if our APEX configuration allowed you to access a different schema.  
+1. IMAGINE the following two procedures have been created in an account called IACAD_SCHEMA, which also contains an EMPS table. 
+CREATE OR REPLACE PROCEDURE show_emps_def (p_emp_id IN NUMBER) IS 
+	  v_name       	emps.name%TYPE; 
+  v_dept_id    	emps.department_id%TYPE;   v_dept_name  emps.department_name%TYPE; 
+	  v_sal        	emps.salary%TYPE; 
+BEGIN 
+  SELECT name, department_id, department_name, salary 
+      INTO v_name, v_dept_id, v_dept_name, v_sal 
+    FROM emps 
+    WHERE employee_id = p_emp_id; 
+  DBMS_OUTPUT.PUT_LINE('The employee details are: ' || v_name  
+                        || ' ' || v_dept_id || '  '|| v_dept_name || ' ' || v_sal); 
+EXCEPTION 
+  WHEN NO_DATA_FOUND THEN 
+    DBMS_OUTPUT.PUT_LINE('No data found for employee id: ' || p_emp_id || '. Sorry, please enter another number and try again.'); 
+END; 
+CREATE OR REPLACE PROCEDURE show_emps_inv (p_emp_id IN NUMBER) 
+AUTHID CURRENT_USER IS   v_name       	emps.name%TYPE;   v_dept_id    	emps.department_id%TYPE;   v_dept_name  emps.department_name%TYPE; 
+Copyright © 2020, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks of Oracle and/or its affiliates. Other names may be trademarks of their respective owners. 
+	  v_sal        	emps.salary%TYPE; 
+BEGIN 
+  SELECT name, department_id, department_name, salary       INTO v_name, v_dept_id, v_dept_name, v_sal 
+    FROM emps 
+    WHERE employee_id = p_emp_id; 
+  DBMS_OUTPUT.PUT_LINE('The employee details are: ' || v_name || ' '  
+|| v_dept_id || ' ' || v_dept_name || ' ' || v_sal); 
+EXCEPTION 
+  WHEN NO_DATA_FOUND THEN 
+    DBMS_OUTPUT.PUT_LINE('No data found for employee id: ' || p_emp_id || '. Sorry, please enter another number and try again.'); 
+END; 
+ 
+A.	Write the syntax to DESCRIBE both procedures. If the procedures existed, this would allow you to verify that you can see them in your account. Remember to prefix the procedure name with the schema name, and remember that the schema/procedures don't exist (we are using our imaginations). 
+Describe show_emps_def;
+Describe show_emps_inv;
+ 	 
+B.	Write the syntax to execute a SQL statement to try to select directly from the table used in the procedures. Remember that the schema/procedures don't exist (we are using our imaginations). 
+  
+C.	Explain the differences between the two procedures in regards to definer's rights compared to invoker's rights. 
+2.	Write the syntax to execute the first procedure (show_emps_def) with the following actual parameter value:  employee_id = 100. Using your imagination, explain what would happen and why if the code executed successfully in your schema? 
+CREATE OR REPLACE PROCEDURE show_emps_def  IS 
+	  v_name       	emps.name%TYPE; 
+ v_dept_id    	emps.department_id%TYPE;   v_dept_name  emps.department_name%TYPE; 
+	  v_sal        	emps.salary%TYPE; 
+BEGIN 
+  SELECT name, department_id, department_name, salary 
+      INTO v_name, v_dept_id, v_dept_name, v_sal 
+    FROM emps 
+    WHERE employee_id = 100; 
+  DBMS_OUTPUT.PUT_LINE('The employee details are: ' || v_name  
+                        || ' ' || v_dept_id || '  '|| v_dept_name || ' ' || v_sal); 
+EXCEPTION 
+  WHEN NO_DATA_FOUND THEN 
+    DBMS_OUTPUT.PUT_LINE('No data found for employee id: ' || p_emp_id || '. Sorry, please enter another number and try again.'); 
+END; 
+
+Se vor afisa toti angajatii cu id-ul 100.
+3.	Write the syntax to execute the first procedure again, this time with employee_id = 10. Using your imagination, and assuming there is no employee with employee_id = 10, explain what would happen and why if the code executed successfully in your schema?  
+ CREATE OR REPLACE PROCEDURE show_emps_def  IS 
+	  v_name       	emps.name%TYPE; 
+ v_dept_id    	emps.department_id%TYPE;   v_dept_name  emps.department_name%TYPE; 
+	  v_sal        	emps.salary%TYPE; 
+BEGIN 
+  SELECT name, department_id, department_name, salary 
+      INTO v_name, v_dept_id, v_dept_name, v_sal 
+    FROM emps 
+    WHERE employee_id = 10; 
+  DBMS_OUTPUT.PUT_LINE('The employee details are: ' || v_name  
+                        || ' ' || v_dept_id || '  '|| v_dept_name || ' ' || v_sal); 
+EXCEPTION 
+  WHEN NO_DATA_FOUND THEN 
+    DBMS_OUTPUT.PUT_LINE('No data found for employee id: ' || p_emp_id || '. Sorry, please enter another number and try again.'); 
+END; 
+
+Se va afisa : No data found for employee id: 10. Sorry, please enter another number and try again 
+4.	Write the syntax to execute the second procedure (show_emps_inv) with employee_id = 100. Using your imagination, explain what would happen and why if you executed this code in your schema?  
+CREATE OR REPLACE PROCEDURE show_emps_inv  
+AUTHID CURRENT_USER IS   v_name       	emps.name%TYPE;   v_dept_id    	emps.department_id%TYPE;   v_dept_name  emps.department_name%TYPE; 
+	  v_sal        	emps.salary%TYPE; 
+BEGIN 
+  SELECT name, department_id, department_name, salary       INTO v_name, v_dept_id, v_dept_name, v_sal 
+    FROM emps 
+    WHERE employee_id = 100; 
+  DBMS_OUTPUT.PUT_LINE('The employee details are: ' || v_name || ' '  
+|| v_dept_id || ' ' || v_dept_name || ' ' || v_sal); 
+EXCEPTION 
+  WHEN NO_DATA_FOUND THEN 
+    DBMS_OUTPUT.PUT_LINE('No data found for employee id: ' || p_emp_id || '. Sorry, please enter another number and try again.'); 
+END; 
+
+Se vor afisa detaliile pentru angajatii cu  id 100
+
+State two changes that must be made if show_emps_inv is to work correctly and display details of an employee. 
+ 

@@ -1,0 +1,60 @@
+1.dual
+2.format
+3.INITCAP
+4.character function
+5.trim
+6.expression
+7.single row function
+8.upper
+9.input
+10.concat
+11.output
+12.lower
+13.lpad
+14.substr
+15.replace
+16.instr
+17.lenght
+18.rpad
+
+1.SELECT CONCAT('Oracle', CONCAT(CONCAT(' ','Internet'),CONCAT(' ','Aplication'))) as "The Best Class" 
+FROM DUAL;
+2.select SUBSTR('Oracle Internet Academy' ,13 ,3) as "The Net"
+from dual;
+3.
+select LENGTH('Oracle Internet Academy') as "length"
+from dual;
+23
+4.
+select INSTR('Oracle Internet Academy','l') as "position"
+from dual;
+5
+5.
+select REPLACE(RPAD(LPAD('Oracle Internet Academy',27,'*'),31,'*'),' ','****') as "***"
+from dual;
+6.
+select REPLACE(RPAD(LPAD('Oracle Internet Academy',23,'$'),23,'$'),' ','$$$') as "$$$"
+from dual;
+7.
+select REPLACE('Oracle Internet Academy','Internet','2013-2014')as "The Best Class"
+from dual;
+8.
+SELECT order_date, LPAD( order_total, 9, '$') as total
+FROM f_orders;
+9.
+SELECT  first_name||' '||last_name||' '||address||' '||city||' '||state||' '||zip as address
+FROM f_customers;
+10.
+SELECT CONCAT( SUBSTR(first_name, 1, 1)  , last_name) "Name", salary, department_id
+FROM employees
+WHERE department_id = :dept_id;
+11.
+SELECT department_id as "departmentid", department_name as "departmentname", location_id as "location id"
+FROM departments
+WHERE LOWER(department_name)  = LOWER(:the_department_of_your_choice);
+12.
+SELECT first_name, last_name, hire_date, TO_CHAR(hire_date, 'MON') as "Month"
+FROM employees
+
+WHERE TO_CHAR(hire_date, 'MON') = UPPER(:whichmonth);
+

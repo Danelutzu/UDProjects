@@ -1,0 +1,69 @@
+1.boolean
+2.%type
+
+1.
+A.
+a.valid
+b.invalid
+c.invalid
+d.valid
+
+B.
+b invalid. the correct form should have been 
+STUDENT_NAME VARCHAR2(10) := 'Johnson';
+c.invalid because when a constant it is declared ,you shoudld initialize it
+
+DECLARE
+STUDENT_NAME VARCHAR2(10) := 'Johnson';
+BEGIN
+DBMS_OUTPUT.PUT_LINE(STUDENT_NAME );
+END;
+
+DECLARE
+number_of_students PLS_INTEGER;
+BEGIN
+DBMS_OUTPUT.PUT_LINE(number_of_students );
+END;
+
+DECLARE
+stu_per_class CONSTANT NUMBER:=6;
+BEGIN
+DBMS_OUTPUT.PUT_LINE(stu_per_class );
+END;
+
+DECLARE
+tomorrow DATE := SYSDATE+1;
+BEGIN
+DBMS_OUTPUT.PUT_LINE(tomorrow );
+END;
+
+
+2.
+they are namde correct but it would be better to name them v_contry_name and v_median_age because the columns are named
+the same as the variables and it is a bit harder to read it 
+
+3.
+
+DECLARE
+ v_country_name countries.country_name%TYPE;
+ v_median_age countries.median_age%TYPE;
+BEGIN
+ SELECT country_name, median_age INTO v_country_name, v_median_age
+ FROM countries
+ WHERE country_name = 'Japan';
+ DBMS_OUTPUT.PUT_LINE('The median age in '|| v_country_name || ' is '
+ || v_median_age || '.');
+END;
+
+4.
+it is better to use %type because it chooses the data type of the variable or the column you want without the risk of coding wrong.
+in our example you can write wrong the scale of median age or the size of the country_name
+
+5.
+declare
+TODAY DATE:=SYSDATE;
+TOMORROW TODAY%TYPE;
+BEGIN
+TOMORROW:=TODAY+1;
+ DBMS_OUTPUT.PUT_LINE('Hello World '||'today is: '||TODAY||' tomorrow is: '||TOMORROW);
+END;

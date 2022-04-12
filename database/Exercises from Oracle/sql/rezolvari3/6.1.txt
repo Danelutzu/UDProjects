@@ -1,0 +1,13 @@
+1. cross join
+2. natural join
+
+1.
+select last_name,DEPARTMENT_NAME
+from employees cross join departments
+2.
+select department_id, department_name, location_id, city
+from locations natural join departments
+3.
+select department_id, department_name, location_id, city
+from locations natural join departments
+where department_id in (20,50)

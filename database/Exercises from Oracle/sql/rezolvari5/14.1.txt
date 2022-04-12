@@ -1,0 +1,63 @@
+1.unique constraint
+2.not null constraint
+3.primary key
+4.check constraint
+5.references
+6.unique constraint
+7.foreign key
+8.table level constraint
+9.constraint
+10.column level constraint
+
+
+1.
+They are database rules used to maintain data integrity
+2.
+composite constraints are used at the table level
+not null-column level
+it is better for us to name the constraint if used
+3.
+you may find the constraint you are looking for faster than an auto generated name 
+4-5.
+name  		  data_type lenght precision	scale	nullable
+id    		  number    6      0			NO
+name  		  varchar2  50  			yes
+date_opened	  date      				no
+address		  varchar2  50				no
+city		  varchar2  30				no
+zip_postal_code	  varchar2  12				yes
+phone		  varchar2  20				yes
+email		  varchar2  75				yes
+manager_id	  number    6      0			yes
+emergency_contact varchar2  20				yes
+
+6-7.
+create table f_global_locations
+(id number(6,0) constraint f_gl_id_pk primary key,
+name varchar2(50),
+date_opened DATE CONSTRAINT f_gl_do_nn NOT NULL ENABLE,
+address VARCHAR2(50) CONSTRAINT f_gl_add_nn NOT NULL ENABLE,
+city VARCHAR2(30) CONSTRAINT f_gl_city_nn NOT NULL ENABLE,
+zip_postal_code VARCHAR2(12),
+phone VARCHAR2(20),
+email VARCHAR2(75) CONSTRAINT f_gl_email_uk UNIQUE,
+manager_id NUMBER(6,0),
+emergency_contact VARCHAR2(20)
+);
+
+8.
+describe f_global_locations
+9.
+create table f_global_locations
+(id number(6,0) constraint f_gl_id_pk primary key,
+name varchar2(50),
+date_opened DATE CONSTRAINT f_gl_do_nn NOT NULL ENABLE,
+address VARCHAR2(50) CONSTRAINT f_gl_add_nn NOT NULL ENABLE,
+city VARCHAR2(30) CONSTRAINT f_gl_city_nn NOT NULL ENABLE,
+zip_postal_code VARCHAR2(12),
+phone VARCHAR2(20),
+email VARCHAR2(75) ,
+manager_id NUMBER(6,0),
+emergency_contact VARCHAR2(20),
+CONSTRAINT f_gl_email_uk UNIQUE(email)
+);

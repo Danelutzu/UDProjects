@@ -1,0 +1,73 @@
+1.update
+2.corelated subquery update
+3.integrity constraints
+4.corelated subquery delete
+5.delete
+
+1.
+update copy_f_food_items 
+set price=3.75
+where description='Strawberry Shake'
+
+update copy_f_food_items 
+set price=1.20
+where description='Fries'
+
+2.
+UPDATE copy_f_staffs  SET overtime_rate = NVL(overtime_rate, 0) + 0.75
+WHERE LOWER(first_name || ' ' || last_name) = 'bob miller';
+
+UPDATE copy_f_staffs  SET overtime_rate = NVL(overtime_rate, 0) + 0.85
+WHERE LOWER(first_name || ' ' || last_name) = 'sue doe';
+3.
+insert into copy_f_orders
+(order_number,order_date,order_total,cust_id,staff_id)
+values (5680,to_date('June 12,2004','fmMonth dd,yyyy'),159.78,145,9)
+
+INSERT INTO copy_f_orders(order_number,order_date,order_total,cust_id,staff_id)
+VALUES(5691,TO_DATE('09-23-2004','mm-dd-yyyy'),145.98,225,12);
+
+INSERT INTO copy_f_orders(order_number,order_date,order_total,cust_id,staff_id)
+VALUES(5701,TO_DATE('July 4, 2004','fmMonth dd, yyyy'),229.31,230,12);
+4.
+INSERT INTO copy_f_customers(id,first_name,last_name,address,city,state,zip,phone_number)
+VALUES(145,'Katie','Hernandez','92 Chico Way','Los Angeles','CA',98008,'8586667641');
+
+INSERT INTO copy_f_customers(id,first_name,last_name,address,city,state,zip,phone_number)
+VALUES(225,'Daniel','Spode','1923 Silverado','Denver','CO',80219,'7193343523');
+
+INSERT INTO copy_f_customers(id,first_name,last_name,address,city,state,zip,phone_number)
+VALUES(230,'Adam','Zurn','5 Admiral Way','Seattle','WA',NULL,'4258879009');
+
+the last one gives an error because zip is not nullable and in the tale of values, it is null
+5.
+update copy_f_staffs
+set salary=(
+select salary 
+from copy_f_staffs
+where first_name||' '||last_name='Bob Miller'
+)
+where first_name||' '||last_name='Sue Doe';
+6.
+insert into copy_f_staffs
+(ID,first_name,last_name,birthdate,salary,overtime_rate,training,staff_type,manager_id,manager_budget,manager_target)
+values(25,'Kai','Kim',to_date('03-Nov-1988','fmdd-Mon-yyyy'),6.75,NULL,NULL,'Order Taker',NULL,NULL,NULL)
+7.
+update copy_f_staffs
+set manager_id=(select manager_id
+from copy_f_staffs
+where first_name||' '||last_name='Sue Doe')
+where first_name||' '||last_name='Kai Kim'
+8.
+ORA-02292: integrity constraint (RO_A849_SQL_S01.EMP_DEPT_FK) violated - child record found
+9.
+delete from copy_f_staffs
+where first_name||' '||last_name='Kai Kim'
+
+SELECT * FROM copy_f_staffs;
+
+10.
+delete from lesson7_emp 
+where employee_id in(
+select distinct employee_id
+from job_history)

@@ -1,0 +1,100 @@
+1.explicit cursors
+2.cursor
+3.close 
+4.context area
+5.implicit cursors
+6.open
+7.fetch
+8.active set
+
+1.
+explicit cursors can be declared at your choise,with as many columns as you want,you open that cursor and close it when you want,extract the data you want
+implicit cursors are less efective because they are automatically declared by Oracle
+
+2.
+?
+
+3.
+−It is the only way in PL/SQL to retrieve more than one row
+from a table
+−Each row is fetched by a separate program statement, giving
+the programmer more control over the processing of the
+rows
+
+4.
+A-F.
+DECLARE
+CURSOR currencies_cur IS
+SELECT currency_code,currency_name
+ FROM Currencies
+ order by currency_name;
+v_currency_code currencies.currency_code%TYPE;
+v_currency_name currencies.currency_name%TYPE;
+BEGIN
+OPEN currencies_cur;
+LOOP
+FETCH currencies_cur INTO v_currency_code, v_currency_name;
+EXIT WHEN currencies_cur%NOTFOUND;
+DBMS_OUTPUT.PUT_LINE(v_currency_code||' '||v_currency_name);
+END LOOP;
+CLOSE currencies_cur;
+END;
+
+G.
+DECLARE
+CURSOR countries_cur IS
+SELECT country_name,national_holiday_date,national_holiday_name
+ FROM countries
+ where region_id=5 and national_holiday_date is not null;
+v_national_holiday_date countries.national_holiday_date%type;
+v_national_holiday_name countries.national_holiday_name%type;
+v_country_name countries.country_name%TYPE;
+BEGIN
+OPEN countries_cur;
+LOOP
+FETCH countries_cur INTO v_country_name,v_national_holiday_date,v_national_holiday_name;
+EXIT WHEN countries_cur%NOTFOUND;
+DBMS_OUTPUT.PUT_LINE(v_country_name||' '||v_national_holiday_date||' '||v_national_holiday_name);
+END LOOP;
+CLOSE countries_cur;
+END;
+
+5.
+declaring
+−Do not include the INTO clause in the cursor declaration
+because it appears later in the FETCH statement
+−If processing rows in a specific sequence is required, then use
+the ORDER BY clause in the query
+−The cursor can be any valid SELECT statement, including joins,
+subqueries, and so on
+
+fetching
+−Include the same number of variables in the INTO clause of
+the FETCH statement as columns in the SELECT statement,
+and be sure that the data types are compatible
+−Match each variable to correspond to the columns position in
+the cursor definition
+−Use %TYPE to insure data types are
+compatible between variable and table
+
+
+6.
+declare
+Cursor region_cur is
+select region_name, count(*) as "Number of countries"
+from regions r join countries c
+on r.region_id=c.region_id
+group by region_name
+having count(*)>=10
+order by region_name;
+v_region_name regions.region_name%type;
+v_number NUMBER(30);
+BEGIN
+OPEN region_cur;
+LOOP
+fetch region_cur into v_region_name,v_number;
+EXIT WHEN region_cur%NOTFOUND;
+dbms_output.put_line(v_region_name || ' ' || v_number);
+end loop;
+close region_cur;
+end;

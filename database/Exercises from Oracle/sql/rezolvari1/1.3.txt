@@ -1,0 +1,49 @@
+1.join
+2.arithmetic operator
+3.column
+4.projection
+5.null
+6.alias
+7.arithmetic expression
+8.selection
+9.select statement
+10.select clause
+11.from clause
+12.keyword
+13.clause
+14.a combination of the two clauses
+
+1.
+SELECT LAST_NAME
+FROM STUDENTS;
+2.
+SELECT LAST_NAME AS "CLIENT",EMAIL AS "Email Address"
+FROM D_CLIENTS;
+3.
+SELECT last_name, round(salary + salary *.05 +.50,2)
+FROM f_staffs;
+4.
+SELECT *
+FROM d_songs;
+5.
+b. Payment = car_cost * 1.25 + 5.00 - (tax - license) 
+6.
+keywords:
+SELECT,FROM
+Select clause:
+SELECT employee_id,last_name
+From clause:
+FROM employees
+statement:
+SELECT employee_id, last_name
+FROM employees
+7.
+a-selection
+b-join
+c-projection
+8.
+c. null * .05 = null
+9.
+c. BEARS, COLOR, age
+10.
+b. SELECT and FROM must be in a SELECT statement in order to return all rows

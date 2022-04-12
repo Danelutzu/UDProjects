@@ -1,0 +1,55 @@
+1.on delete cascade
+2.check constraint
+3.primary key 
+4.not null
+5.on delete se null
+6.foreign key constraint
+
+1.
+a.primary key 
+uniquely identify each row in table
+b.foreign key
+Referential integrity constraint links back parent table's primary/unique key to child table's column
+c.check constraint
+Explicitly define condition to be met by each row's fields. This condition must be returned as true or unknown.
+
+2.
+not null admit_date,vaccination_date
+primary key-animal_id
+unique-license_tag_number
+
+3.
+create table animals(
+animal_id number(6) CONSTRAINT anm_id_pk PRIMARY KEY,
+name VARCHAR2(25),
+license_tag_number NUMBER(10) CONSTRAINT anm_ltn_uk UNIQUE,
+admit_date DATE CONSTRAINT anm_ad_nn NOT NULL ENABLE,
+adoption_id NUMBER(5),
+vaccination_date DATE CONSTRAINT anm_vd_nn NOT NULL ENABLE
+);
+
+4.
+insert into animals
+values(101,'Spot',35540,to_date('10-Oct-2004','dd-Mon-yyyy'),205,to_date('12-Oct-2004','dd-Mon-yyyy'))
+
+5.
+alter table animals
+modify(adoption_id NUMBER(5) CONSTRAINT anm_adt_id_fk
+REFERENCES adoptions(id)ENABLE);
+--the table adoptions does not exist so there will be an error--
+6.
+a.
+if a row in the parent table is deleted,all rows in the child table with a reference to that deleted row in the parent table will be deleted
+b.
+if a row in the parent table is deleted,all rows in the child table with a reference to that deleted row in the parent table will be set to NULL
+
+7.
+To satisfy the constraint, each row in the table must
+make the condition either True or unknown (due to a
+null)
+• The condition of a CHECK constraint can refer to any
+column in the specified table, but not to columns of
+other tables
+The CHECK constraint cannot use the pseudocolumns
+CURRVAL, NEXTVAL, LEVEL, or ROWNUM
+  I cannot use subqueries and SYSDATE, SYSTIMESTAMP, UID, USER, and USERENV

@@ -1,0 +1,201 @@
+1.RAISE_APPLICATION_ERROR
+2.RAISE
+3.User-defined error
+
+
+CREATE TABLE excep_emps AS SELECT * FROM employees;
+
+1.
+10
+
+declare
+e_dept_exp EXCEPTION;
+v_dept_id excep_emps.department_id%type:=10;
+begin
+update excep_emps 
+set salary=10000
+where department_id=v_dept_id;
+if sql%rowcount=0 then
+raise e_dept_exp;
+else
+dbms_output.put_line(sql%rowcount);
+end if;
+EXCEPTION
+WHEN e_dept_exp THEN
+dbms_output.put_line('invalid department_id');
+end;
+
+4
+
+20
+declare
+e_dept_exp EXCEPTION;
+v_dept_id excep_emps.department_id%type:=20;
+begin
+update excep_emps 
+set salary=10000
+where department_id=v_dept_id;
+if sql%rowcount=0 then
+raise e_dept_exp;
+else
+dbms_output.put_line(sql%rowcount);
+end if;
+EXCEPTION
+WHEN e_dept_exp THEN
+dbms_output.put_line('invalid department_id');
+end;
+
+7
+
+30-40
+declare
+e_dept_exp EXCEPTION;
+v_dept_id excep_emps.department_id%type:=30;
+begin
+update excep_emps 
+set salary=10000
+where department_id=v_dept_id;
+if sql%rowcount=0 then
+raise e_dept_exp;
+else
+dbms_output.put_line(sql%rowcount);
+end if;
+EXCEPTION
+WHEN e_dept_exp THEN
+dbms_output.put_line('invalid department_id');
+end;
+
+invalid department_id
+2.
+declare
+v_dept_id excep_emps.department_id%type:=40;
+v_salary excep_emps.salary%type;
+begin
+update excep_emps 
+set salary=10000
+where department_id=v_dept_id;
+
+select salary into v_salary
+from excep_emps
+where salary=10000 and department_id=v_dept_id;
+EXCEPTION
+when no_data_found then
+raise_application_error(-20202,'no rows were updated');
+DBMS_OUTPUT.PUT_LINE('Valid departments are: ');
+FOR c1 IN (SELECT DISTINCT department_id FROM departments)
+LOOP
+DBMS_OUTPUT.PUT_LINE(c1.department_id);
+END LOOP;
+end;
+
+ORA-20202: no rows were updated
+
+3.
+declare
+e_dept_exp EXCEPTION;
+pragma exception_init(e_dept_exp,-20999);
+v_dept_id excep_emps.department_id%type:=40;
+begin
+update excep_emps 
+set salary=10000
+where department_id=v_dept_id;
+if sql%rowcount=0 then
+raise_application_error(-20999,'invalid department');
+else
+dbms_output.put_line(sql%rowcount);
+end if;
+EXCEPTION
+when e_dept_exp then
+DBMS_OUTPUT.PUT_LINE('Valid departments are: ');
+FOR c1 IN (SELECT DISTINCT department_id FROM departments)
+LOOP
+DBMS_OUTPUT.PUT_LINE(c1.department_id);
+END LOOP;
+end;
+
+Valid departments are: 
+10
+20
+50
+60
+80
+85
+90
+110
+190
+
+4.
+a.
+there are no employees in the department with the id =40
+so this is what the output says
+
+b.
+DECLARE
+ e_delete_exp EXCEPTION;
+ e_select_exp EXCEPTION;
+ v_dept_id excep_emps.department_id%TYPE;
+ v_count NUMBER;
+BEGIN
+ v_dept_id := 40;
+ SELECT COUNT(*) INTO v_count
+ FROM excep_emps
+ WHERE department_id = v_dept_id;
+ 
+ if sql%notfound then
+ raise e_select_exp;
+ end if;
+
+ DBMS_OUTPUT.PUT_LINE('There are ' || v_count || ' employees');
+ DELETE FROM excep_emps
+ WHERE department_id = v_dept_id;
+ 
+ if sql%rowcount=0 then
+ raise e_delete_exp;
+ else
+ dbms_output.put_line(sql%rowcount);
+ end if;
+ 
+ DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT || ' employees were deleted');
+ ROLLBACK;
+EXCEPTION
+when e_select_exp then
+ DBMS_OUTPUT.PUT_LINE(' no employees found');
+when e_delete_exp then
+ DBMS_OUTPUT.PUT_LINE(' no employees deleted');
+END;
+
+There are 0 employees
+ no employees deleted
+
+c.
+DECLARE
+ e_delete_exp EXCEPTION;
+pragma EXCEPTION_INIT(e_delete_exp,-20203);
+ e_select_exp EXCEPTION;
+pragma EXCEPTION_INIT(e_select_exp ,-20204);
+ v_dept_id excep_emps.department_id%TYPE;
+ v_count NUMBER;
+BEGIN
+ v_dept_id := 40;
+ SELECT COUNT(*) INTO v_count
+ FROM excep_emps
+ WHERE department_id = v_dept_id;
+ 
+ if sql%notfound then
+ raise_application_error(-20203,'no employees found');
+ end if;
+
+ DBMS_OUTPUT.PUT_LINE('There are ' || v_count || ' employees');
+ DELETE FROM excep_emps
+ WHERE department_id = v_dept_id;
+ 
+ if sql%rowcount=0 then
+ raise_application_error(-20204,'no employees deleted');
+ else
+ dbms_output.put_line(sql%rowcount);
+ end if;
+ 
+ DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT || ' employees were deleted');
+ ROLLBACK;
+
+END;

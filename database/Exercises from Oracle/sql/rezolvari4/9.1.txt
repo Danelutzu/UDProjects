@@ -1,0 +1,43 @@
+1.having
+2.group by
+
+1.
+a,d,
+2.
+a.
+SELECT manager_id
+FROM employees
+having AVG(salary) <16000
+GROUP BY manager_id;
+b.
+SELECT COUNT(*)
+FROM d_cds
+WHERE cd_number < 93;
+c.
+SELECT ID, MAX(ID), artist AS Artist
+FROM d_songs
+WHERE duration IN('3 min', '6 min', '10 min')
+HAVING ID < 50
+GROUP by ID,artist;
+d.
+SELECT loc_type, rental_fee AS Fee
+FROM d_venues
+where id <100
+GROUP BY rental_fee,loc_type
+ORDER BY 2;
+3.
+SELECT DISTINCT MAX(song_id)
+FROM d_track_listings 
+where track= 1 or track= 2 or track=3;
+4.
+a true
+b false
+c false
+5.
+select round(min(avg(salary)),2),round(max(avg(salary)),2)
+from employees
+group by department_id
+6.
+select round(avg(max(salary)),2)
+from employees
+group by department_id

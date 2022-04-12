@@ -1,0 +1,89 @@
+1.propagating exceptions
+2.exception visibility
+3.exception scope
+
+1.
+a.
+DECLARE
+ v_country_name countries.country_name%TYPE;
+ v_currency_code countries.currency_code%TYPE;
+BEGIN
+ DECLARE
+ e_no_currency EXCEPTION;
+ BEGIN
+ SELECT country_name, currency_code INTO v_country_name, v_currency_code
+ FROM countries
+ WHERE country_id = 5; -- repeat with 672
+ IF v_currency_code = 'NONE' THEN
+ RAISE e_no_currency;
+ END IF;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ DBMS_OUTPUT.PUT_LINE('This country does not exist');
+ WHEN e_no_currency THEN
+ DBMS_OUTPUT.PUT_LINE('This country exists but has no currency');
+ END;
+ EXCEPTION
+ WHEN OTHERS THEN
+ DBMS_OUTPUT.PUT_LINE('Another type of error occurred');
+END;
+when country id =672 ,the code will raise the e_no_currency exception
+and displays This country exists but has no currency
+
+when country id=5 the code will verify in the exception section of 
+the inner block if there is any data found using that id
+and displays This country does not exist
+
+b.
+it will generate an error because e_no_currency is out of scope
+
+DECLARE
+ v_country_name countries.country_name%TYPE;
+ v_currency_code countries.currency_code%TYPE;
+BEGIN
+ DECLARE
+ e_no_currency EXCEPTION;
+ BEGIN
+ SELECT country_name, currency_code INTO v_country_name, v_currency_code
+ FROM countries
+ WHERE country_id = 5; -- repeat with 672
+ IF v_currency_code = 'NONE' THEN
+ RAISE e_no_currency;
+ END IF;
+ END;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ DBMS_OUTPUT.PUT_LINE('This country does not exist');
+ WHEN e_no_currency THEN
+ DBMS_OUTPUT.PUT_LINE('This country exists but has no currency');
+ WHEN OTHERS THEN
+ DBMS_OUTPUT.PUT_LINE('Another type of error occurred');
+END;
+
+c.
+DECLARE
+ v_country_name countries.country_name%TYPE;
+ v_currency_code countries.currency_code%TYPE;
+ e_no_currency EXCEPTION;
+BEGIN
+ DECLARE
+ BEGIN
+ SELECT country_name, currency_code INTO v_country_name, v_currency_code
+ FROM countries
+ WHERE country_id = 5; -- repeat with 672
+ IF v_currency_code = 'NONE' THEN
+ RAISE e_no_currency;
+ END IF;
+ END;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ DBMS_OUTPUT.PUT_LINE('This country does not exist');
+ WHEN e_no_currency THEN
+ DBMS_OUTPUT.PUT_LINE('This country exists but has no currency');
+ WHEN OTHERS THEN
+ DBMS_OUTPUT.PUT_LINE('Another type of error occurred');
+END;
+
+now it happens the same thing as at the point 1 a but we had to change the place 
+of declaration of e_no_currency in the outer block so it can be visible 
+to the exception section

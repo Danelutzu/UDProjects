@@ -1,0 +1,80 @@
+1.ddl trigger
+2.mutating table
+3.call statement
+4.database event trigger
+
+1.
+•ON DATABASE fires the trigger for DDL on all schemas
+in the database
+•ON SCHEMA fires the trigger only for DDL on objects in
+your own schema
+
+2.
+CREATE TABLE audit_ddl
+ (action VARCHAR2(20),
+ who VARCHAR2(30) DEFAULT USER,
+ when TIMESTAMP DEFAULT SYSTIMESTAMP);
+
+3.
+
+A. CREATE OR REPLACE TRIGGER new_tab_trig
+ AFTER CREATE ON SCHEMA
+BEGIN
+ INSERT INTO audit_ddl(action)
+VALUES( 'New object');
+END;
+
+the trigger fires when any type of object is created
+
+B. CREATE OR REPLACE TRIGGER drop_tab_trig
+ AFTER DROP ON SCHEMA
+BEGIN
+ INSERT INTO audit_ddl(action)
+ VALUES( 'Deleted object');
+END;
+
+the trigger fires when any type of object is dropped
+
+C. CREATE OR REPLACE TRIGGER alter_tab_trig
+ AFTER ALTER ON SCHEMA
+BEGIN
+ INSERT INTO audit_ddl(action)
+VALUES( 'Modified object');
+END;
+
+the trigger fires when any type of object is altered
+(ALTER TABLE sink ADD bubbles INTEGER;
+ALTER TABLE sink DROP COLUMN bubbles;)
+
+4.
+CREATE OR REPLACE TRIGGER trigger_name
+event ON table_name
+CALL log_execution
+
+this is different from a normal trigger by not having a end; at the end of the statement
+
+5.
+create or replace trigger up_sal_trigg
+before update OF SALARY ON copy_emp13_4
+FOR EACH ROW
+
+DECLARE 
+v_maxsalary copy_emp13_4.salary%type;
+BEGIN
+SELECT MAX(salary) into v_maxsalary
+from copy_emp13_4;
+DBMS_OUTPUT.PUT_LINE('max salary is '||v_maxsalary);
+RAISE_APPLICATION_ERROR(-20203,'cannot update');
+
+END; 
+
+6.
+update copy_emp13_4
+set salary=25000
+where employee_id=100;
+
+ORA-04091: table RO_A849_SQL_S01.COPY_EMP13_4 is mutating, trigger/function may not see it
+ORA-06512: at "RO_A849_SQL_S01.UP_SAL_TRIGG", line 4
+ORA-04088: error during execution of trigger 'RO_A849_SQL_S01.UP_SAL_TRIGG'
+
+it will generate an error because we use a row level trigger that modifies a mutating table : copy_emp13_4

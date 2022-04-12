@@ -1,0 +1,34 @@
+1.interval year to month
+2.timestamp with local time zone
+3.blob
+4.timestamp with time zone
+5.interval day to second
+6.clob
+7.timestamp
+
+1.
+a.insert into clock_1
+(first_column,second_column)
+values('31-Oct-2020 12:20:00 AM+5:30','31-Oct-2020 12:20:00 AM+5:30')
+--nu merge--
+b.
+CREATE TABLE clock_2
+(loan_duration1 INTERVAL YEAR(3) TO MONTH,
+loan_duration2  INTERVAL YEAR(2) TO MONTH);
+INSERT INTO clock_2 (loan_duration1, loan_duration2 )
+VALUES( INTERVAL '120' MONTH(3), INTERVAL '3-6' YEAR TO MONTH);
+c.
+CREATE TABLE clock_3
+(day_duration1 INTERVAL DAY(3) TO SECOND,
+day_duration2  INTERVAL DAY(3) TO SECOND);
+INSERT INTO clock_3 (day_duration1, day_duration2 )
+VALUES( INTERVAL '25' DAY(2), INTERVAL '4 10:30:10' DAY TO SECOND);
+
+2.
+select* from clock_1
+select* from clock_2
+select* from clock_3
+3.
+for example,when i have a flight to a state where the time zone is different from the point i go,and i need to know that state time zone
+when it is a common work on a code/site and it saves the date of the last modification and there are working people from different regions,we need to know the date in our local time zone
+or there is a football match in another state and it is live presented, i need to convert the our of beginning in that state to the our of beginning in my state

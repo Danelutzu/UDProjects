@@ -1,0 +1,84 @@
+1.outer query
+2.single row subquery/multiple row subquery
+3.subquery
+4.multiple row subquery
+5.single row subquery
+6.IN
+7.inner query
+
+1.
+when you need to find some information that you need to find the information you want.
+2.
+An inner query nested in an outer query
+3.
+select song_id
+from d_play_list_items
+where event_id in (
+select event_id
+from d_play_list_items
+where song_id=45
+);
+4.
+select id,name,cost
+from d_events
+where cost> (
+select cost
+from d_events
+where id=100
+);
+5.
+select track
+from d_track_listings
+where cd_number= (
+select cd_number
+from d_cds
+where title='Party Music for All Occasions'
+);
+6.
+select id,name
+from d_events
+where theme_code= (
+select code
+from d_themes
+where description='Tropical'
+);
+7.
+select first_name,last_name
+from f_staffs
+where salary> (
+select salary
+from f_staffs
+where id=12
+);
+8.
+select first_name,last_name
+from f_staffs
+where staff_type!= (
+select staff_type
+from f_staffs
+where first_name='Bob' and last_name = 'Miller'
+);
+9.
+select first_name,last_name
+from employees
+where department_id= (
+select department_id
+from departments
+where department_name= 'IT'
+);
+10.
+select department_name
+from departments
+where location_id= (
+select location_id
+from locations
+where city= 'Seattle'
+);
+11.
+a. It is good programming practice to place a subquery on the right side of the comparison
+operator.
+true
+b. A subquery can reference a table that is not included in the outer query’s FROM clause.
+true
+c. Single-row subqueries can return multiple values to the outer query.
+false

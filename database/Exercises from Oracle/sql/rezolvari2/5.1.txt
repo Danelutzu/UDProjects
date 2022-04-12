@@ -1,0 +1,55 @@
+1. char
+2.fm
+3.conversion function
+4.number
+5.varchar2
+6.date
+7.to_char
+8.rr
+9.to_number
+10.dd
+11.to_date
+
+1.
+select last_name,to_char(birthdate,'Month DD, YYYY ')
+from f_staffs
+2.
+select to_date('January 3, 04','Month DD YY')
+from dual;
+3.
+SELECT 'The promotion began on the ' || TO_CHAR(start_date, 'ddthsp "of" Month YYYY') as output
+FROM f_promotional_menus
+WHERE code = 110;
+4.
+SELECT 'Today is the ' || TO_CHAR(sysdate, 'ddthsp "of" Month year')
+FROM dual
+5.
+SELECT id, first_name ||' '||last_name as  name, TO_CHAR( salary, '$999999.99') as salary
+FROM f_staffs;
+6.
+SELECT  first_name ||' '||last_name as  name, TO_CHAR( salary, '999999.99') as salary,to_char(salary+2000,'999999,99') as new_salary
+FROM f_staffs;
+7.
+SELECT TO_CHAR(start_date, 'fmdd-Mon-YYYY (Day)') as startdate
+FROM f_promotional_menus
+WHERE  code = 110;
+8.
+SELECT to_char(to_date('25-Dec-2004','dd-Mon-yyyy'),'Month-ddth-yyyy')
+FROM dual
+SELECT to_char(to_date('25-Dec-2004','dd-MON-yyyy'),'MONTH-ddth-yyyy')
+FROM dual
+SELECT to_char(to_date('25-Dec-2004','dd-MON-yyyy'),'ddth month,yyyy')
+FROM dual
+9.
+SELECT code, TO_CHAR(low_range,'$999999.99') as low_range, TO_CHAR(high_range,'$999999.99') as high_range
+FROM d_packages ;
+10.
+SELECT TO_DATE('JUNE192004','fxfmMONTHddyyyy') as changeddate
+FROM dual;
+11.
+implicit: select sysdate from dual;
+a date to a character data converted automatically
+explicit:select to_char(sysdate,'MONTH DD YYYY') from dual
+A date being converted to character data type using non-default format 'MONTH DD YYYY'
+12.
+i think it is more simple just to change the necessary type of data 

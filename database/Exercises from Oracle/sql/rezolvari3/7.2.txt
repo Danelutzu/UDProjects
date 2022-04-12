@@ -1,0 +1,40 @@
+1.
+SELECT  e.name ,p.code
+from  D_EVENTS e, D_PACKAGES p
+WHERE(e.cost BETWEEN p.low_range AND p.high_range);
+2.
+SELECT e.last_name, e.salary, j.grade_level
+FROM employees e,job_grades j
+WHERE e.salary BETWEEN j.lowest_sal AND j.highest_sal;
+3.
+equijoin is based on a exact match(=) between columns of two tables 
+so a nonequijoin is when there is no exact match but there is still a relation 
+4.
+WHERE a.ranking >=g.lowest_rank and a.ranking<= g.highest_rank   
+5.
+you use a table alias when you need to work with two or more columns with the same name so you can distinguish them
+6.
+nonequijoin
+7.
+SELECT *
+FROM f_customers c left outer join f_orders o
+ON(c.id=o.cust_id)
+8.
+SELECT  e.last_name, d.department_ID ,d.department_name
+FROM employees e , departments d
+where e.employee_id=d.department_id(+)
+9.
+SELECT  e.last_name, d.department_ID ,d.department_name
+FROM employees e , departments d
+where e.employee_id(+)=d.department_id
+10.
+a.you can't use (+) in the both directions.That should be equivalent to full outer join but using (+) in a full outer join is not possible
+b.you can't use e. or d. if in from clause you gave no aliases to table names
+11.
+SELECT d_cds.title , d_track_listings.song_id
+FROM  d_cds, d_track_listings
+WHERE d_cds.cd_number = d_track_listings.cd_number(+) ;
+12.
+If I had to think of my dream job ,it would be something based on scuba diving or taking part in some competitions/teams using sports.
+Scuba diving is considered a dangerous thing so it is well payed, you can have the chance to see some awesome landscapes and be a part of under water world.
+Sports could keep me fit and healthy and you also have the opportunity to see different places on the globe and have a lot of money if you are good enough 

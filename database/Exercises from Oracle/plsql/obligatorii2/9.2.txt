@@ -1,0 +1,62 @@
+Vocabulary:
+
+1.A user defined function
+
+
+Try it/Solve it:
+
+1.SELECT last_name, salary, sal_increase(salary, 5) 
+FROM f_emps WHERE sal_increase(salary,5)>10000;
+
+CREATE OR REPLACE FUNCTION sal_increase2
+(p_salary f_emps.salary%TYPE,
+p_percent_incr NUMBER)
+RETURN NUMBER
+IS
+BEGIN
+IF (p_salary + (p_salary * p_percent_incr / 100))>10000 THEN
+RETURN (p_salary + (p_salary * p_percent_incr / 100));
+ELSE
+RETURN p_salary;
+END;
+
+
+2.The SELECT column-list of a query
+Conditional expressions in the WHERE and HAVING clauses
+The ORDER BY and GROUP BY clauses of a query
+The VALUES clause of the INSERT statement
+The SET clause of the UPDATE statement.
+
+3.SELECT last_name, salary,sal_increase(salary, 5)
+FROM f_emps ORDER BY sal_increase(salary,5) DESC;
+
+4.SELECT department_id, SUM(salary),SUM(sal_increase(salary,5))
+FROM f_emps
+GROUP BY department_id
+HAVING SUM(sal_increase(salary,5)) > 20000;
+
+5.
+
+6.CREATE OR REPLACE PROCEDURE insert_emp (p_employee_id IN employees.employee_id%TYPE, p_last_name IN employees._last_name%TYPE, p_department_id IN employees.department_id%TYPE)
+AS
+BEGIN
+IF check_dept(p_department_id)=TRUE THEN
+INSERT INTO f_emps VALUES(p_department_id,p_employee_id,'',p_last_name);
+ELSE
+DBMS_OUTPUT.PUT_LINE('Departamentul nu exista');
+END;
+
+7.
+
+8.CREATE OR REPLACE PROCEDURE insert_emp (p_employee_id IN employees.employee_id%TYPE, p_last_name IN employees._last_name%TYPE, p_department_id IN employees.department_id%TYPE)
+AS
+BEGIN
+IF check_dept(p_department_id)=TRUE THEN
+INSERT INTO f_emps VALUES(p_department_id,p_employee_id,'',p_last_name);
+ELSE
+INSERT INTO f_emps VALUES(p_department_id,'Temporary',p_employee_id,'',p_last_name);
+END;
+
+10.table RO_A848_SQL_S18.F_EMPS is mutating, trigger/function may not see it
+
+11.ORA-14551: cannot perform a DML operation inside a query

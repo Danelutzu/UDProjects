@@ -1,0 +1,66 @@
+1.AVG
+2.COUNT
+3.STDDEV
+4.GROUP FUNCTIONS
+5.MIN
+6.VARIANCE
+7.SUM
+8.MAX
+9.Aggregate
+
+1.
+AVG FACE MEDIA INTRE VALORI
+SELECT AVG(ID)
+from d_songs;
+COUNT NUMARA RANDURILE
+SELECT count(ID)
+from d_songs;
+MAX FACE MAXIMUL
+SELECT max(ID)
+from d_songs;
+MIN FACE MINIMUL
+SELECT min(ID)
+from d_songs;
+STDDEV PENTRU 2 SETURI DE DATE CU APROXIMATIV ACELASI MIJLOC ,CU CAT MAI MARE RASPANDIREA ,CU ATAT ESTE MAI BUNA DEVIEREA STANDARD
+SELECT round(stddev(ID),2)
+from d_songs;
+SUM FACE SUMA VALORILOR
+SELECT sum(ID)
+from d_songs;
+VARIANCE CALCULEAZA RASPANDIREA DATELOR IN JURUL VALORII MEDII
+SELECT variance(ID)
+from d_songs;
+
+2.
+SELECT round(avg(cost),2)
+from d_events;
+3.
+SELECT avg(salary)
+from f_staffs
+where manager_id=19;
+4.
+SELECT sum(salary)
+from f_staffs
+where manager_id in (12,9);
+5.
+SELECT min(salary), max(hire_date), min(last_name),max(last_name)
+from employees
+where department_id in (50,60);
+6.
+it will return 1 row 
+7.
+there were null values 
+8.
+ March 30,
+1969
+9.
+SELECT avg(nvl(order_total,0))
+from f_orders
+where order_date between to_date('January 1, 2002','Month dd,YYYY') and to_date('December 21, 2002','Month dd,YYYY');
+10.
+SELECT max(hire_date)
+from employees;
+11.
+sum(operating_cost)
+12.
+a,b,e,g

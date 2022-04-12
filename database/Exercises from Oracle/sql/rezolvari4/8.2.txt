@@ -1,0 +1,28 @@
+1. count
+2. distinct
+3. count(distinct ....)
+
+1.
+select count(distinct title)
+from d_songs
+2.
+select count(distinct loc_type)
+from d_venues
+3.
+select count(distinct song_id),count(distinct cd_number)
+from d_track_listings
+4.
+select count(nvl(email,0))
+from d_clients
+5.
+select count(auth_EXPENSE_AMT)
+from d_partners
+6.
+4 3
+7.
+select round(avg(nvl(auth_EXPENSE_AMT,100000)),2)
+from d_partners
+8.
+b,c
+9.
+c.

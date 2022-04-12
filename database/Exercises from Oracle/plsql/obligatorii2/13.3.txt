@@ -1,0 +1,138 @@
+1.compound trigger
+2.instead of trigger 
+3.conditional predicate
+4.:new qualifier
+5.dml row trigger
+
+1.
+CREATE OR REPLACE TRIGGER copy_emp13_chg
+after insert on copy_emp13
+begin
+insert into audit_table
+values('Inserting',user,systimestamp);
+end;
+
+2.
+CREATE OR REPLACE TRIGGER copy_emp13_chg
+AFTER INSERT OR DELETE ON copy_emp13
+BEGIN
+IF DELETING THEN 
+  insert INTO audit_table
+  VALUES('Deleted', user , systimestamp);
+END IF;
+IF INSERTING THEN 
+  insert INTO audit_table
+  VALUES('Inserted', user , systimestamp);
+END IF;
+END;
+
+insert into copy_emp13
+values(500,'Jack','Miller','jk@ff','0712345678',to_date('12-Jun-1978','dd-Mon-yyyy'),'st_clk',2500,0,520,105,0);
+
+delete from copy_emp13
+where employee_id=500;
+
+3.
+alter table audit_table
+add employee_id number;
+
+CREATE OR REPLACE TRIGGER copy_emp13_chg
+AFTER INSERT OR DELETE ON copy_emp13 FOR EACH ROW
+BEGIN
+IF DELETING THEN 
+  insert INTO audit_table
+  VALUES('Deleted', user , systimestamp,:OLD.employee_id);
+END IF;
+IF INSERTING THEN 
+  insert INTO audit_table
+  VALUES('Inserted', user , systimestamp,:OLD.employee_id);
+END IF;
+END;
+
+
+insert into copy_emp13
+values(503,'Jak','Mil','jk@','0712355679',to_date('14-Jun-1978','dd-Mon-yyyy'),'st_clk3',2503,0,523,108,0);
+
+insert into copy_emp13
+values(502,'Jaks','Mile','jk@f','0712345679',to_date('13-Jun-1978','dd-Mon-yyyy'),'st_clk2',2502,0,522,107,0);
+
+insert into copy_emp13
+values(501,'Jacks','Miler','jk@f','0712345679',to_date('13-Jun-1978','dd-Mon-yyyy'),'st_clk1',2501,0,521,106,0);
+
+delete from copy_emp13
+where employee_id in (501,502);
+
+for every row modified(inserted or deleted) in audit table is inserted a row
+
+4.
+ a.
+CREATE TABLE dept_count
+ AS SELECT department_id dept_id, count(*) count_emps
+ FROM employees
+ GROUP BY department_id;
+
+b.
+CREATE VIEW emp_vu
+AS SELECT employee_id, last_name, department_id
+FROM employees;
+
+c. nu merge
+create or REPLACE trigger emp_vu_trg 
+INSTEAD of INSERT OR DELETE ON emp_vu for EACH ROW
+BEGIN
+IF DELETING THEN 
+  insert INTO dept_count
+  VALUES(:old.dept_id,:old.count_emps-1);
+END IF;
+IF INSERTING THEN 
+  insert INTO dept_count
+  VALUES(:old.dept_id,:old.count_emps+1);
+END IF;
+END;
+
+d. 
+e legat de c
+
+5.NU MERGE
+create table copy_emp13_3 as select * from employees
+
+
+create or REPLACE trigger emp_audit_trigg 
+FOR UPDATE OF salary ON copy_emp13_3 COMPOUND TRIGGER
+BEFORE EACH ROW IS
+BEGIN
+  insert INTO audit_table
+  VALUES('Updating', user , systimestamp,employee_id);
+END BEFORE EACH ROW;
+
+AFTER STATEMENT IS
+begin
+update audit_table
+set action='Update complete;old salary was'||:old.salary||';new salary is '||:new.salary
+END AFTER STATEMENT; 
+
+END emp_audit_trigg;
+-------------------------------------------
+create or REPLACE trigger emp_audit_trigg 
+FOR UPDATE OF salary ON copy_emp13_3 COMPOUND TRIGGER
+TYPE emp_audit IS TABLE OF audit_table%rowtype INDEX BY 
+BINARY INTEGER;
+emp_audit_i emp_audit;
+v_index BINARY_INTEGER:=0;
+BEFORE EACH ROW IS
+BEGIN
+v_index:=v_index+1;
+emp_audit_i(v_index).action:='Updating';
+emp_audit_i(v_index).user_name:=user;
+emp_audit_i(v_index).last_change_date:=systimestamp;
+emp_audit_i(v_index).employee_id:=:old.employee_id;
+END BEFORE EACH ROW;
+
+AFTER STATEMENT IS
+begin
+ forall i IN emp_audit_i.FIRST..emp_audit_i.LAST
+update audit_table
+set action='Update complete;old salary was'||:old.salary||';new salary is '||:new.salary
+END AFTER STATEMENT;
+END emp_audit_trigg;
+------------------------------

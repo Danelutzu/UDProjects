@@ -1,0 +1,93 @@
+1.row trigger
+2.dml trigger
+3.statement trigger
+
+1.
+timing 
+event
+object_name
+trigger_body
+
+2.
+a.
+CREATE TABLE audit_table
+ (action VARCHAR2(50),
+ user_name VARCHAR2(30) DEFAULT USER,
+ last_change_date TIMESTAMP DEFAULT SYSTIMESTAMP);
+
+b.
+CREATE OR REPLACE TRIGGER copy_emp13_chg
+after insert on copy_emp13
+begin
+insert into audit_table
+values('Inserting',user,systimestamp);
+end;
+
+c.
+insert into copy_emp13
+values(500,'Jack','Miller','jk@ff','0712345678',to_date('12-Jun-1978','dd-Mon-yyyy'),'st_clk',2500,0,520,105,0);
+
+Inserting	APEX_PUBLIC_USER	19-NOV-20 06.58.06.941905 PM
+
+d.
+delete from copy_emp13
+where employee_id=500;
+
+no other row was inserted in audit table
+
+
+3.
+True or false? A row trigger fires at least once even if no rows are affected.
+false
+
+What is the difference between a statement trigger and a row trigger?
+
+A statement trigger fires one time for the whole DML statement and a row trigger fires
+once for each row affected by the DML statement.
+4.
+CREATE OR REPLACE TRIGGER copy_emp13_up
+after update on copy_emp13
+begin
+insert into audit_table
+values('update',user,systimestamp);
+end;
+
+CREATE OR REPLACE TRIGGER copy_emp13_del
+after delete on copy_emp13
+begin
+insert into audit_table
+values('delete',user,systimestamp);
+end;
+
+update copy_emp13
+set employee_id=99
+where employee_id in (100,101,102);
+
+before insert statement trigger 0 times
+before update statement trigger 1 time
+after delete statement trigger 0 times
+
+5.nu merge
+
+CREATE OR REPLACE TRIGGER copy_emp13_chg
+before update of salary on copy_emp13
+begin
+insert into audit_table
+values('Updating',user,systimestamp);
+end;
+
+update copy_emp13
+set salary=30000
+where employee_id=999;
+
+select * from audit_table
+
+a.???NU MERGE??? 
+CREATE OR REPLACE TRIGGER copy_emp13_chg
+before update of salary on copy_emp13
+begin
+if to_char(sysdate,'HH24:MI') between '20:00' and '06:00'
+raise_application_error(-20999,'You may insert into copy_emp13 table only during
+business hours');
+end if;
+end;

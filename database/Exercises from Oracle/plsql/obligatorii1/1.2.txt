@@ -1,0 +1,30 @@
+1.portability
+2.blocks
+3.exception
+
+1.
+You can share blocks with other programmers
+to speed up development time
+
+2.
+•Integration of procedural constructs with SQL
+•Modularized program development
+•Improved performance
+•Integration with Oracle tools
+• Portability
+• Exception handling
+
+3.
+
+			PL/SQL	 	C 		Java
+Requires Oracle database
+or tool 		Yes		 No		 No
+Object-oriented 	Some features	 No 	 	Yes
+Performance against an
+Oracle database 	Very efficient	 Less efficient Less efficient
+Portable to different
+operating systems 	Yes 		Somewhat	 Yes
+Ease of learning 	Relatively easy More difficult More difficult
+
+4.
+?

@@ -1,0 +1,82 @@
+
+
+Pl/SQL subprograms 
+Identifier 
+Anonymous Block 
+Procedures
+
+
+
+1. in B este o procedura care poate sa fie reutilizata mereu cand e nevoie ,face viata mai usoara
+si codul mai simplu
+in A este doar un update, daca cnv vrea sa faca un update trebuie sa rescrie ce a scris in A
+sau sa folosesca procedura din B
+
+2. - permite reutilizare codului fara sa fie nev sa l rescriem
+
+3. - un set de statements care sunt identificate dupa un singur nume
+
+4.
+CREATE TABLE employees_dup AS SELECT * from employees;
+
+A.
+CREATE OR REPLACE PROCEDURE name_change IS
+BEGIN
+UPDATE employees_dup
+SET first_name = 'Susan'
+WHERE department_id = 80;
+END name_change;
+
+B.
+BEGIN
+name_change;
+END;
+
+C.
+Select * from employees_dup where department_id = 80;
+
+
+5.
+Create or replace procedure pay_raise is
+Begin
+Update employees_dup
+Set salary = '30000';
+End pay_raise;
+
+begin
+pay_raise;
+end;
+
+select First_name, last_name, Salary from employees_dup
+
+
+6.
+
+ORA-00955: name is already used by an existing object
+
+7.
+CREATE OR REPLACE PROCEDURE name_change IS
+BEGIN
+UPDATE employees_dup
+SET first_name = 'Susan'
+WHERE department_id = 80;
+END name_change;
+
+codul merge bn
+
+8.
+Create or replace procedure new_sal is
+Begin
+Update employees_dup
+Set salary = 1000
+where department_id = 80;
+Update employees_dup
+set salary = 2000
+where department_id = 50;
+Update employees_dup
+set salary = 3000
+where department_id NOT IN (80,50);
+end new_sal;
+
+Select department_id, salary from employees_dup;
+

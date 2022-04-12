@@ -1,0 +1,38 @@
+1.trunc
+2.numeric functions
+3.mod
+4.round
+
+1.
+SELECT last_name, salary ,round(salary/1.55,2)
+FROM employees
+WHERE employee_id BETWEEN 100 AND 102;
+2.
+SELECT last_name, salary ,trunc(salary*1.05333,2)
+FROM employees
+WHERE department_id =80;
+3.
+SELECT CASE WHEN MOD(38873 , 2) = 1 THEN 'odd' ELSE 'even' END as "error"
+FROM dual; 
+4.
+SELECT round(845.553,1)
+FROM dual; 
+SELECT round(30695.348,2)
+FROM dual; 
+SELECT round(30695.348,-2)
+FROM dual; 
+SELECT trunc(2.3454 ,1)
+FROM dual; 
+5.
+SELECT last_name,salary/3
+FROM employees
+where mod(salary,3)=0; 
+6.
+SELECT mod(34,8) as example
+from dual; 
+7.
+SELECT (565.784 - ROUND(565.784, 2))*(:number_of_people) as diff
+FROM dual;
+1000-4
+100-0.4
+1000000-4000

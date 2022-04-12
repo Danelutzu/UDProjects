@@ -1,0 +1,78 @@
+1.delete
+2.insert
+3.merge
+4.update
+5.data definition language
+6.data manipulation language
+
+1.DELETE FROM students;
+C. Delete all rows from STUDENTS
+
+2.
+INSERT INTO STUDENTS (id, last_name, first_name)
+ VALUES (29,'Perez','Jessica');
+This SQL statement:
+A. Does an explicit insert
+
+3.
+create table grocery_items
+(product_id number(6,0) NOT NULL, brand varchar2(20),description varchar2(20));
+
+4.
+insert into grocery_items(product_id,brand,description)
+values(110,'Colgate','Toothpaste');
+insert into grocery_items(product_id,brand,description)
+values(111,'Ivory','Soap');
+insert into grocery_items(product_id,brand,description)
+values(112,'Heinz','Ketchup');
+
+5.
+insert into grocery_items(product_id,brand,description)
+values(113,'Dry Spirit','Saniuta');
+
+6.
+update grocery_items
+set description='tomato catsup'
+where brand='Heinz';
+
+7.
+insert into grocery_items
+values(114,'sugus','bombonele');
+
+8.
+update grocery_items
+set brand='Dove'
+where brand='Ivory';
+
+9.
+create table new_items
+(product_id number(6,0) NOT NULL, brand varchar2(20),description varchar2(20));
+
+insert into new_items
+values(110,'Colgate','Dental paste');
+
+insert into new_items
+values(175,'Dew','Soda');
+
+insert into new_items
+values(275,'Palmolive','Dish detergent');
+
+10.
+merge into grocery_items g using new_items n
+ON(g.product_id=n.product_id)
+WHEN MATCHED THEN UPDATE
+SET g.brand=n.brand,g.description=n.description
+WHEN NOT MATCHED THEN INSERT
+VALUES (n.product_id,n.brand,n.description)
+
+11.
+1
+12.
+2
+13.
+Which of the following is true about the SQL statement in question 10?
+A. new_items is the source table and grocery_items is the target table.
+
+14.
+select * from grocery_items
+

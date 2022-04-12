@@ -1,0 +1,119 @@
+1.
+Statement 					Valid in	Not Valid
+						PL/SQL		in PL/SQL
+		
+
+ALTER USER SET password = 'oracle';				invalid
+CREATE TABLE test (a NUMBER);					invalid
+DROP TABLE test;						invalid
+SELECT emp_id INTO v_id FROM employees;		valid
+GRANT SELECT ON employees TO PUBLIC;				invalid
+INSERT INTO grocery_items (product_id, brand,	valid
+ description) VALUES (199, 'Coke', 'Soda');
+REVOKE UPDATE ON employees FROM PUBLIC;				invalid
+ALTER TABLE employees						invalid
+ RENAME COLUMN employee_id TO emp_id;
+DELETE FROM grocery_items			valid
+ WHERE description = 'Soap';
+
+2.
+declare
+v_max_deptno departments.department_id%TYPE ;
+begin
+select  department_id into v_max_deptno
+from departments
+where department_id=(select max(department_id)
+                      from departments);
+DBMS_OUTPUT.PUT_LINE(v_max_deptno);
+end;
+
+3.
+DECLARE
+ v_country_name countries.country_name%TYPE := 'Federative Republic of Brazil';
+ v_lowest_elevation countries.lowest_elevation%TYPE;
+ v_highest_elevation countries.highest_elevation%TYPE;
+BEGIN
+ SELECT lowest_elevation, highest_elevation into v_lowest_elevation,v_highest_elevation
+ FROM countries
+where country_name=v_country_name;
+ DBMS_OUTPUT.PUT_LINE('Lowest elevation: '||v_lowest_elevation);
+ DBMS_OUTPUT.PUT_LINE('Highest elevation: '||v_highest_elevation);
+END;
+
+
+4.
+a.
+it fails because there are more than one row returned
+b.
+it fails because there is no job id like IT_PRAG
+
+5.
+a.
+create table emp_dup
+as(select * from employees);
+b.
+select first_name,last_name 
+from emp_dup
+c.
+DECLARE
+ last_name VARCHAR2(25) := 'Fay';
+BEGIN
+ UPDATE emp_dup
+ SET first_name = 'Jennifer'
+ WHERE last_name = last_name;
+END;
+d.
+select first_name,last_name 
+from emp_dup
+e.
+drop table emp_dup
+
+create table emp_dup
+as(select * from employees);
+
+f.
+DECLARE
+ v_last_name VARCHAR2(25) := 'Fay';
+BEGIN
+ UPDATE emp_dup
+ SET first_name = 'Jennifer'
+ WHERE last_name = v_last_name;
+END;
+
+g.
+select first_name,last_name 
+from emp_dup
+
+6.
+declare 
+v_test test.test%type;
+begin
+v_test:=1;
+DBMS_OUTPUT.PUT_LINE(v_test);
+end;
+
+1
+
+Statement processed.
+
+0.00 seconds
+
+se poate
+
+7.
+create table test(test number(6,0),chestie varchar2(20));
+
+insert into test
+values(1,'unu');
+
+insert into test
+values(2,'doi');
+
+declare 
+test test.test%type;
+begin
+test:=1;
+DBMS_OUTPUT.PUT_LINE(v_test);
+end;
+
+nu se poate

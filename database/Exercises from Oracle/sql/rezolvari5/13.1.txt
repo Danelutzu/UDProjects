@@ -1,0 +1,43 @@
+1.data dictionary
+2.schema
+3.default
+4.table
+5.create table
+
+1.
+
+Column Name   student_id  last_name  first_name credits graduation_date
+Key Type      primary key
+Nulls/Unique  no/yes      mo/no      no/no      no/no   yes/no
+FK Column			     		credits
+Datatype      NUMBER      VARCHAR2   VARCHAR2   NUMBER  DATE
+Length        6 	  75         75		3
+
+2.
+CREATE TABLE  graduate_candidates
+   ( student_id NUMBER(6,0),
+    last_name VARCHAR2(75) CONSTRAINT gcs_last_name_nn NOT NULL ENABLE,
+ first_name VARCHAR2(75) CONSTRAINT gcs_first_name_nn NOT NULL ENABLE,
+ credits NUMBER(5,2) CONSTRAINT gcs_credits_nn NOT NULL ENABLE,
+graduation_date DATE,
+ CONSTRAINT gcs_std_id_pk PRIMARY KEY (student_id) );
+3.
+DESCRIBE graduate_candidates;
+4.
+create table danelu_table
+as(select * from graduate_candidates)
+5.
+insert into danelu_table
+(student_id,last_name,first_name,credits,graduation_date)
+values(69,'Daniel','Ungurianu',30,NULL)
+6.
+select * from user_tables
+
+USER_TABLES describes the relational tables owned by the current user
+
+select * from user_objects
+
+USER_CATALOG lists indexes, tables, views, clusters, synonyms, and sequences owned by the current user
+
+select* from user_catalog
+USER_OBJECTS describes all objects owned by the current user

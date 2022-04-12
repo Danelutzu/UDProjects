@@ -1,0 +1,62 @@
+Vocabulary:
+
+1.Stored function
+
+
+Try it/Solve it:
+
+2.CREATE FUNCTION full_name(p_f_name VARCHAR2,p_l_name VARCHAR2)
+RETURN VARCHAR2 IS v_full_name VARCHAR2(80);
+BEGIN
+v_full_name:=p_l_name||','||p_f_name;
+RETURN v_full_name;
+END;
+
+A.DECLARE 
+v_res varchar2(80);
+BEGIN
+v_res:=full_name('Antohie','Matei');
+DBMS_OUTPUT.PUT_LINE(v_res);
+END;
+
+B.
+BEGIN
+DBMS_OUTPUT.PUT_LINE(full_name('Antohie','Matei'));
+END;
+
+C.SELECT first_name,last_name,full_name(first_name,last_name) FROM employees WHERE department_id=50;
+
+3.CREATE FUNCTION func_divide(p_num1 NUMBER, p_num2 NUMBER)
+RETURN NUMBER is v_divide NUMBER;
+BEGIN
+v_divide:=ROUND(p_num1/p_num2,2);
+RETURN v_divide;
+END;
+
+A.BEGIN
+DBMS_OUTPUT.PUT_LINE(func_divide(50,2));
+END;
+
+B.divisor is equal to 0
+
+C.CREATE FUNCTION func_divide(p_num1 NUMBER, p_num2 NUMBER)
+RETURN NUMBER is v_divide NUMBER;
+BEGIN
+v_divide:=ROUND(p_num1/p_num2,2);
+RETURN v_divide;
+EXCEPTION
+WHEN ZERO_DIVIDE THEN RETURN(0);
+END;
+
+4.Procedure cant be called in Select statements.
+Procedure uses OUT to return the value, a function uses RETURN.
+In a procedure, it is not mandatory to return a value, in a function it is.
+Return datatype is not specified at the time of creation in a procedure, in a function it is mandatory to do so.
+
+5.A.yes
+B.Poti sa folosesti intr-o functie select direct deoarece nu modifici datele.
+C.Call 1-valid
+Call 2-invalid
+Call 3-invalid
+Call 4-invalid
+Call 5-valid

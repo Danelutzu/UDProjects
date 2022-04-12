@@ -1,0 +1,30 @@
+1.nvl
+2.coalesce
+3.nvl2
+4.nullif
+
+1.
+SELECT name, start_date, end_date, NVL2(end_date, 'end in two weeks', TO_CHAR( SYSDATE, 'DD-Mon-YYYY')) as nvl2
+FROM f_promotional_menus;
+2.
+SELECT last_name, NVL(OVERTIME_RATE,0) as "Overtime Status"
+FROM f_staffs;
+3.
+SELECT last_name, to_char(NVL(OVERTIME_RATE,5),'$999.99') as "Overtime Status"
+FROM f_staffs;
+4.
+SELECT last_name, NVL(OVERTIME_RATE,9999) as manager_id
+FROM f_staffs;
+5.
+c. SELECT nullif(v_sal, 50) FROM emp;
+6.
+it will always show the last_name because it cant be nullable
+7.
+SELECT first_name,last_name, to_char(hire_date,'Month')
+FROM employees;
+SELECT first_name,last_name, nullif(to_char(hire_date,'Month'),'September')
+FROM employees;
+8.
+SELECT first_name, NVL(specialty, 'No Specialty') as specialty
+FROM d_partners;
+

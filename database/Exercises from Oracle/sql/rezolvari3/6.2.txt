@@ -1,0 +1,44 @@
+1.ON
+2. USING
+
+1.
+select department_id, department_name, location_id, city
+from departments join locations USING(location_id)
+where location_id=1400
+2.
+select song_id, cd_number,title,comments
+from d_cds join d_track_listings using (cd_number) join d_play_list_items using (song_id)
+3.
+select city,department_id, department_name, location_id
+from departments join locations USING(location_id)
+where department_id in(10,20,30) and city='Seattle'
+4.
+select COUNTRY_NAME,region_id,region_name
+from countries join regions using (region_id)
+where region_name='Americas'
+5.
+select first_name,last_name,hire_date,job_id,job_title,max_salary
+from employees join jobs using (job_id)
+where max_salary>12000
+6.
+select first_name,last_name,hire_date,job_title,email
+from employees join jobs using (job_id)
+where job_title='Stock Clerk'
+7.
+select e.employee_id, e.first_name, e.last_name, e.manager_ID, m.first_name,m.last_name
+from employees e join employees m
+ON e.manager_id=m.employee_id
+8.
+select d.location_ID, l.city,d.department_name 
+from departments d join locations l
+ON d.location_id=l.location_id
+9.
+select e.manager_ID, d.department_ID, d.department_name, e.first_name,e.last_name
+from departments d join employees e
+ON(e.department_id=d.department_id)
+where d.department_id in(80,90,110,190)
+10.
+select e.employee_ID, e.last_name, d.department_ID, d.department_name,e.hire_date
+from departments d join employees e
+ON(e.department_id=d.department_id)
+where e.hire_date='07-Jun-1994'

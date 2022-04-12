@@ -1,0 +1,38 @@
+1.
+3gl	pl/sql
+4gl	sql
+Is proprietary to Oracle Corporation 	PL/SQL 	 
+Nonprocedural 	 SQL 
+Procedural 	PL/SQL 	 
+Is ANSI-compliant  	SQL 
+
+2.
+PL/SQL is needed to solve limitations of SQL.
+
+3.
+cursor
+iterative control
+conditional control
+
+4.
+assignment statement:
+v_first_letter := get_first_letter(v_last_name);
+
+variable:
+ECLARE
+v_first_name varchar2(40);
+v_last_name varchar2(40);
+v_first_letter varchar2(1);
+
+reusable/callable program unit:
+DBMS_OUTPUT.PUT_LINE
+
+ conditional control statement:
+IF 'N' > 'v_first_letter' THEN
+DBMS_OUTPUT.PUT_LINE('The last name for ' || v_first_name || ' ' || v_last_name || ' is
+between A and M');
+ELSE
+DBMS_OUTPUT.PUT_LINE('The last name for ' || v_first_name || ' ' || v_last_name || ' is
+between N and Z');
+END IF;
+

@@ -1,0 +1,51 @@
+1.application trigger
+2.trigger
+3.database trigger
+
+1.
+Triggers allow specified actions to be performed
+automatically within the database, without having to
+write extra application code
+
+
+You can use triggers to:
+−Enhance complex database security rules
+−Create auditing records automatically
+−Enforce complex data integrity rules
+−Create logging records automatically
+−Prevent tables from being accidentally
+dropped
+−Prevent invalid DML transactions from
+occurring
+−Generate derived column values
+automatically
+−Maintain synchronous table
+replication
+−Gather statistics on table access
+−Modify table data when DML
+statements are issued against views
+
+2.
+The following events in the database can cause a
+trigger to fire:
+−DML operations on a table
+−DML operations on a view, with an INSTEAD OF trigger
+−DDL statements, such as CREATE and ALTER
+−Database system events, such as when a user logs on or the
+DBA shuts down the database
+
+3.
+What is the most important thing to check before creating a database trigger?
+The recursive and cascading effects. 
+
+4.
+Defined with CREATE TRIGGER 	Defined with CREATE PROCEDURE
+
+Data Dictionary contains	Data Dictionary contains source
+source code in 			code in USER_SOURCE	
+USER_TRIGGERS
+
+Implicitly invoked 		Explicitly invoked
+
+COMMIT, SAVEPOINT, and 		COMMIT, SAVEPOINT, and ROLLBACK
+ROLLBACK are not allowed 	are allowed

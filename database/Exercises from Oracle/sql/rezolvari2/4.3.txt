@@ -1,0 +1,104 @@
+1.sysdate
+2.add_months
+3.last_day
+4.next_day
+5.months_between
+
+1.
+select name,event_date, round(months_between(sysdate,event_date))
+from d_events
+where name='Vigil wedding';
+2.
+SELECT TO_DATE('30-Sep-2020', 'dd-Mon-yyyy') - TO_DATE('29-Jun-2020', 'dd-Mon-yyyy') as "Actual Days",
+ ROUND( MONTHS_BETWEEN(TO_DATE('30-Sep-2020', 'dd-Mon-yyyy'), TO_DATE('29-Jun-2020', 'dd-Mon-yyyy'))*30.5, 0) as "Days"
+FROM dual;
+3.
+SELECT TO_DATE('31-Dec-2016', 'dd-Mon-yyyy') - TO_DATE('01-Jan-2016', 'dd-Mon-yyyy') as "Actual Days"
+FROM dual;
+4.
+SELECT round(sysdate,'Month')as "monthround",round(sysdate,'Year')as "yearround"
+FROM dual;
+SELECT trunc(sysdate,'Month')as"monthtrunc",trunc(sysdate,'Year')as "yeartrunc"
+FROM dual;
+5.
+SELECT last_day(TO_DATE('01-Jun-2005','dd-Mon-yyyy'))
+FROM dual;
+30
+6.
+SELECT first_name, last_name , ROUND(MONTHS_BETWEEN(SYSDATE, birthdate)/12) "Nr of Years"
+FROM f_staffs
+WHERE first_name || ' ' || last_name = 'Bob Miller';
+7.
+SELECT ADD_MONTHS(sysdate,6) "Appointment"
+FROM dual;
+8.
+SELECT LAST_DAY(sysdate) "Deadline"
+FROM dual;
+9.
+SELECT round(MONTHS_BETWEEN('26-Sep-2020','01-Jan-2021'),2) 
+FROM dual;
+-3.19
+10.
+SELECT NEXT_DAY('26-Sep-2020','Friday')"First Friday"
+FROM dual;
+2 oct
+11.
+months_between
+12.
+add_months
+
+1.
+select trunc(round(86.678,2),2)
+from dual
+2.
+select UPPER(title)as "Demand Collections"
+from d_cds
+where cd_number=90 OR cd_number=91;
+3.
+select LOWER(last_name)||UPPER(SUBSTR(FIRST_NAME,1,1)) as "User Passwords"
+from d_partners;
+4.
+select UPPER(REPLACE('It"s a small world','It"s a small','hello'))
+from dual;
+5.
+select CONCAT(REPLACE('fiddledeedum','dum'),REPLACE('fiddledeedee','fiddle'))"Nonsense"
+from dual;
+6.
+select REPLACE('Mississippi','i','$')
+from dual;
+7.
+select round(5332.342,-2)
+from dual;
+8.
+select trunc(3.14159,2)
+from dual;
+9.
+select trunc(73.892 ,1)
+from dual;
+10.
+select NEXT_DAY(ADD_MONTHS(sysdate,6),'Friday')"Future"
+from dual;
+16 apr
+11.
+SELECT TO_CHAR(ADD_MONTHS(SYSDATE, 10*12), 'dd-Mon-yyyy (Day)') "Future"
+FROM dual;
+12.
+SELECT TO_CHAR( LAST_DAY( To_Date('01-Feb-2008', 'dd-Mon-yyyy')),'dd-Mon-yyyy (Day)') "Future"
+FROM dual;
+13.
+SELECT *
+FROM d_themes
+where description like'%ie%';
+14.
+SELECT title,year
+FROM d_cds
+where year IN(2001,2002);
+15.
+SELECT employee_id,hire_date 
+FROM employees
+where hire_date between'01-Jan-1997' and sysdate
+order by hire_date desc;
+
+
+
+

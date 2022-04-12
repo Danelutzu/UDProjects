@@ -1,0 +1,75 @@
+1.disable constraint
+2.cascade clause
+3.alter table
+4.enable constraint
+5.drop constraint
+6.drop column
+7.cascade constraints
+
+1.
+enable/disable
+add
+drop
+
+2.
+alter table copy_d_clients
+add CONSTRAINT copy_d_clt_client_number_pk PRIMARY KEY(client_number);
+
+3.
+alter table copy_d_events
+add CONSTRAINT copy_d_events_fk FOREIGN KEY(client_number)
+REFERENCES copy_d_clients(client_number)ENABLE;
+
+4.
+a.
+COPY_D_CLT_CLIENT_NUMBER_PK
+b.
+COPY_D_EVENTS_FK
+
+5.
+alter table copy_d_clients
+drop constraint COPY_D_CLT_CLIENT_NUMBER_PK
+-this unique/primary key is referenced by some foreign keys
+
+alter table copy_d_clients
+drop constraint COPY_D_CLT_CLIENT_NUMBER_PK cascade
+The CASCADE option of the DROP clause causes any dependent constraints also to be dropped.
+
+6.
+insert into copy_d_events
+values(140,'Cine Bas Mitzvah',to_date('15-Jul-2004','dd-Mon-yyyy'),'Church and Private Home formal',4500,105,87,77,7125);
+
+7.
+ALTER TABLE copy_d_clients
+DISABLE CONSTRAINT COPY_D_CLT_CLIENT_NUMBER_PK ;
+
+insert into copy_d_events
+values(140,'Cine Bas Mitzvah',to_date('15-Jul-2004','dd-Mon-yyyy'),'Church and Private Home formal',4500,105,87,77,7125);
+
+8.
+insert into copy_d_events
+values(140,'Cine Bas Mitzvah',to_date('15-Jul-2004','dd-Mon-yyyy'),'Church and Private Home formal',4500,105,87,77,7125);
+
+9.
+alter table copy_d_clients
+enable constraint copy_d_clt_client_number_pk
+
+10.
+at first i need to delete invalid rows 
+
+DELETE FROM copy_d_events WHERE
+client_number  NOT IN ( SELECT client_number FROM copy_d_clients);
+
+ALTER TABLE copy_d_events
+ENABLE CONSTRAINT COPY_D_EVEnts_FK;
+
+11.
+when is needed a massive data transfer or input so we save time
+
+12.
+
+  	C - Check constraint
+	P - Primary key
+        R - Referential integrity (fk)
+        U - Unique key
+

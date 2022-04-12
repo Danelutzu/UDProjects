@@ -1,0 +1,63 @@
+1.nclob
+2.lob
+3.scalar
+4.blob
+5.composite
+6.bfile
+7.reference
+8.object
+9.clob
+
+1.
+The data type gives information about the storage format,valid range of values.
+The data typed are important because you need to know and to let others know what type of data can be introduced in the table or in data base. Also they are important in general because it helps a lot to decode the writeable informations.
+
+2.
+scalar
+composite
+lob
+
+3.
+number
+char
+varchar2
+
+4.
+boolean data type cannot be used to define a table column
+
+5.
+bfile  is stored outside of the database
+
+6.
+CLOB		lob
+VARCHAR2	scalar (character)
+BLOB		lob
+NUMBER		scalar(number)
+BFILE		lob
+TIMESTAMP	scalar(date)
+NCLOB		lob
+RECORD		composite
+PLS_INTEGER	scalar(number)
+LONG		scalar(character)
+TABLE		composite
+BOOLEAN		scalar(boolean)
+
+7.
+Value				 Data Type Category 	Data Type
+‘Switzerland’			 Scalar 		VARCHAR2
+Text of a resume		 lob			clob
+100.20				 scalar			number(p,s)
+A picture			 lob			blob
+1053				 scalar			number	
+11-Jun-2016			 scalar			date
+‘Computer science is the
+science of the 21st century.’	 scalar			long
+--------------------------------------------------------------------
+Index Last_name			composite		table 
+1 'Newman'
+2 'Raman'
+3 'Han'
+--------------------------------------------------------------------
+A movie				lob			bfile
+A sound byte			composite		record
+FALSE				scalar			boolean

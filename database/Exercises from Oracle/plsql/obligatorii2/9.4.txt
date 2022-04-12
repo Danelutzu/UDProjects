@@ -1,0 +1,27 @@
+Vocabulary:
+
+1.USER_SOURCE
+2.USER_OBJECTS
+3.ALL_SOURCE
+
+
+Try it/Solve it:
+
+1.D.CREATE OR REPLACE PROCEDURE add_my_dept
+(p_dept_id IN VARCHAR2, p_dept_name IN VARCHAR2) IS
+BEGIN
+INSERT INTO my_depts (department_id, department_name)
+VALUES (p_dept_id, p_dept_name);
+EXCEPTION
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('Primary key must be unique');
+END add_my_dept;
+
+
+2.SELECT object_type, object_name FROM USER_OBJECTS WHERE object_type='PROCEDURE';
+
+3.DROP PROCEDURE outer_proc;
+
+4.SELECT text FROM USER_SOURCE WHERE name='ADD_MY_DEPT' ORDER BY line;
+
+
